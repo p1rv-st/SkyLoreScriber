@@ -1,0 +1,3 @@
+[submodule "stellarium-skycultures"]
+	path = stellarium-skycultures
+	url = https://github.com/Stellarium/stellarium-skycultures.git

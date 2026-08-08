@@ -1,0 +1,2570 @@
+{
+  "source": "stellarium-skycultures",
+  "repository_license": "AGPL-3.0 (see stellarium-skycultures/LICENSE-AGPL-3.0.txt)",
+  "note": "The repository-level AGPL does not override the per-culture licence declared in each description.md; the per-culture terms below govern the content.",
+  "license_terms": {
+    "CC-BY-SA": {
+      "name": "Creative Commons Attribution-ShareAlike",
+      "derivatives": true,
+      "commercial": true,
+      "attribution": true,
+      "share_alike": true
+    },
+    "CC-BY-SA-2.0": {
+      "name": "Creative Commons Attribution-ShareAlike 2.0",
+      "derivatives": true,
+      "commercial": true,
+      "attribution": true,
+      "share_alike": true
+    },
+    "CC-BY-ND-4.0": {
+      "name": "Creative Commons Attribution-NoDerivatives 4.0",
+      "derivatives": false,
+      "commercial": true,
+      "attribution": true,
+      "share_alike": false
+    },
+    "CC-BY-NC": {
+      "name": "Creative Commons Attribution-NonCommercial",
+      "derivatives": true,
+      "commercial": false,
+      "attribution": true,
+      "share_alike": true
+    },
+    "CC-BY-NC-ND-4.0": {
+      "name": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0",
+      "derivatives": false,
+      "commercial": false,
+      "attribution": true,
+      "share_alike": false
+    },
+    "GPL-2.0": {
+      "name": "GNU General Public License v2.0",
+      "derivatives": true,
+      "commercial": true,
+      "attribution": true,
+      "share_alike": true
+    },
+    "LAL": {
+      "name": "Free Art License",
+      "derivatives": true,
+      "commercial": true,
+      "attribution": true,
+      "share_alike": true
+    },
+    "public-domain": {
+      "name": "Public Domain",
+      "derivatives": true,
+      "commercial": true,
+      "attribution": false,
+      "share_alike": false
+    }
+  },
+  "cultures": [
+    {
+      "id": "anutan",
+      "region": "Oceania",
+      "constellations": 11,
+      "authors": [
+        "This sky culture was contributed by _Doina Bucur_ (d.bucur@utwente.nl). It was digitised for the cross-culture analysis of constellation line figures in reference [#2], `The network signature of constellation line figures`. An earlier version was contributed to the desktop version of Stellarium by _Dan Smale_ (d.smale(at)niwa.co.nz)."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "arabic_al-sufi",
+      "region": "Middle East",
+      "constellations": 52,
+      "authors": [
+        "Khalid al-Ajaji: turath.alfalak@gmail.com"
+      ],
+      "clauses": [
+        {
+          "raw": "Illustrations: Public domain[#5].",
+          "scope": "Illustrations",
+          "license": "public-domain"
+        },
+        {
+          "raw": "Text and data: CC BY-ND 4.0",
+          "scope": "Text and data",
+          "license": "CC-BY-ND-4.0"
+        },
+        {
+          "raw": "Special permission is granted to Stellarium Labs to include the licensed material.",
+          "scope": "all",
+          "license": null,
+          "note": "special_permission"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-ND-4.0",
+          "public-domain"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "public-domain"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": false
+      },
+      "images": {
+        "count": 49,
+        "files": [
+          "illustrations/And.webp",
+          "illustrations/Aql.webp",
+          "illustrations/Aqr.webp",
+          "illustrations/Ara.webp",
+          "illustrations/Arg.webp",
+          "illustrations/Ari.webp",
+          "illustrations/Aur.webp",
+          "illustrations/Boo.webp",
+          "illustrations/CMa.webp",
+          "illustrations/CMi.webp",
+          "illustrations/Cap.webp",
+          "illustrations/Cas.webp",
+          "illustrations/Cen.webp",
+          "illustrations/Cep.webp",
+          "illustrations/Cet.webp",
+          "illustrations/Cnc.webp",
+          "illustrations/CrA.webp",
+          "illustrations/CrB.webp",
+          "illustrations/Crt.webp",
+          "illustrations/Crv.webp",
+          "illustrations/Cyg.webp",
+          "illustrations/Dol.webp",
+          "illustrations/Dra.webp",
+          "illustrations/Equ.webp",
+          "illustrations/Eri.webp",
+          "illustrations/Gem.webp",
+          "illustrations/Her.webp",
+          "illustrations/Hyd.webp",
+          "illustrations/Leo.webp",
+          "illustrations/Lep.webp",
+          "illustrations/Lib.webp",
+          "illustrations/Lyr.webp",
+          "illustrations/Oph.webp",
+          "illustrations/Ori.webp",
+          "illustrations/Peg.webp",
+          "illustrations/Per.webp",
+          "illustrations/PsA.webp",
+          "illustrations/Psc.webp",
+          "illustrations/Sag.webp",
+          "illustrations/Sco.webp",
+          "illustrations/Sgr.webp",
+          "illustrations/Sufi_FishA.webp",
+          "illustrations/Sufi_FishB.webp",
+          "illustrations/Sufi_Horse.webp",
+          "illustrations/Tau.webp",
+          "illustrations/Tri.webp",
+          "illustrations/UMa.webp",
+          "illustrations/UMi.webp",
+          "illustrations/Vir.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": true,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "arabic_ancient",
+      "region": "Middle East",
+      "constellations": 116,
+      "authors": [
+        "Khalid al-Ajaji: turath.alfalak@gmail.com"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-ND 4.0",
+          "scope": "all",
+          "license": "CC-BY-ND-4.0"
+        },
+        {
+          "raw": "Special permission is granted to Stellarium Labs to include the licensed material.",
+          "scope": "all",
+          "license": null,
+          "note": "special_permission"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": true,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "arabic_arabian_peninsula",
+      "region": "Middle East",
+      "constellations": 45,
+      "authors": [
+        "Khalid al-Ajaji, turath.alfalak@gmail.com."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-ND 4.0",
+          "scope": "all",
+          "license": "CC-BY-ND-4.0"
+        },
+        {
+          "raw": "Special permission is granted to Stellarium Labs to include the licensed material.",
+          "scope": "all",
+          "license": null,
+          "note": "special_permission"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "images": {
+        "count": 1,
+        "files": [
+          "illustrations/arabian_peninsula.jpg"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": true,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "arabic_lunar_stations",
+      "region": "Middle East",
+      "constellations": 51,
+      "authors": [
+        "Khalid al-Ajaji: turath.alfalak@gmail.com"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-ND 4.0",
+          "scope": "all",
+          "license": "CC-BY-ND-4.0"
+        },
+        {
+          "raw": "Special permission is granted to Stellarium Labs to include the licensed material.",
+          "scope": "all",
+          "license": null,
+          "note": "special_permission"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": true,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "aztec",
+      "region": "America",
+      "constellations": 5,
+      "authors": [
+        "[Enrique Gómez Candelario](mailto:aldeaglobal@gmail.com)",
+        "English translation by Rafael Rojas Segoviano",
+        "Rework by Stellarium's team.",
+        "### Thanks",
+        "- Javier Gómez Sandoval",
+        "- Martha Patricia Rivera",
+        "- Emilio Ramón Bolaños Guerra",
+        "- Hector Vega",
+        "- Rafael Rojas Segoviano",
+        "- Juan Caballero",
+        "- SAAGS"
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 19,
+        "files": [
+          "Primeros_Memoriales.webp",
+          "Tianquiztli_T.webp",
+          "aztec0.webp",
+          "citlaltlachtli_t.webp",
+          "colotlixayac_image.webp",
+          "colotlixayac_t.webp",
+          "edificios.webp",
+          "illustrations/citlaltlachtli.webp",
+          "illustrations/colotlixayac.webp",
+          "illustrations/mamalhuaztli.webp",
+          "illustrations/tianquiztli.webp",
+          "illustrations/xonecuilli_crop.webp",
+          "mamalhuaztli_image.webp",
+          "mamalhuaztli_t.webp",
+          "nanahuatzin.webp",
+          "tiaquitztli_image.webp",
+          "xonecuilli.webp",
+          "xonecuilli_Glifo.webp",
+          "xonecuilli_t.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "belarusian",
+      "region": "Europe",
+      "constellations": 20,
+      "authors": [
+        "Text and data by Alexander Wolf, [Tsimafei Avilin](https://nasb-by.academia.edu/TsimafeiAvilin) and Johan Meuris.",
+        "Illustrations by Johan Meuris."
+      ],
+      "clauses": [
+        {
+          "raw": "Text and data: CC BY-SA",
+          "scope": "Text and data",
+          "license": "CC-BY-SA"
+        },
+        {
+          "raw": "Illustrations: Free Art License",
+          "scope": "Illustrations",
+          "license": "LAL"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA",
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 20,
+        "files": [
+          "illustrations/elias_s-cart.webp",
+          "illustrations/poland-and-lithuania.webp",
+          "illustrations/the-bride.webp",
+          "illustrations/the-chicks.webp",
+          "illustrations/the-cross.webp",
+          "illustrations/the-crown.webp",
+          "illustrations/the-goat.webp",
+          "illustrations/the-goose_s-way.webp",
+          "illustrations/the-grass-snakes.webp",
+          "illustrations/the-mowers.webp",
+          "illustrations/the-nail.webp",
+          "illustrations/the-ploughman.webp",
+          "illustrations/the-rake.webp",
+          "illustrations/the-ram.webp",
+          "illustrations/the-serpent.webp",
+          "illustrations/the-sieve.webp",
+          "illustrations/the-small-cart.webp",
+          "illustrations/the-throne.webp",
+          "illustrations/the-twins.webp",
+          "illustrations/the-wild-goat.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "blackfoot",
+      "region": "America",
+      "constellations": 4,
+      "authors": [
+        "This sky culture was contributed by _Doina Bucur_ (d.bucur@utwente.nl). It was digitised for the cross-culture analysis of constellation line figures in reference [#4], `The network signature of constellation line figures`."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "boorong",
+      "region": "Oceania",
+      "constellations": 29,
+      "authors": [
+        "This sky culture was contributed by John Morieson and [Alex",
+        "Cherney](http://www.terrastro.com).",
+        "Technical rework by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "Data and illustrations: CC-BY SA",
+          "scope": "Data and illustrations",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 27,
+        "files": [
+          "illustrations/berm.webp",
+          "illustrations/bunya.webp",
+          "illustrations/collenbit.webp",
+          "illustrations/cwar.webp",
+          "illustrations/cwarepil.webp",
+          "illustrations/djuit.webp",
+          "illustrations/gellarlec.webp",
+          "illustrations/karik.webp",
+          "illustrations/kourtchinl.webp",
+          "illustrations/kourtchins.webp",
+          "illustrations/kulkunbulla.webp",
+          "illustrations/marpeank.webp",
+          "illustrations/mindi.webp",
+          "illustrations/neilloan.webp",
+          "illustrations/otchocut.webp",
+          "illustrations/purra.webp",
+          "illustrations/tchingal.webp",
+          "illustrations/totyarguil.webp",
+          "illustrations/tourtbg.webp",
+          "illustrations/unurgun.webp",
+          "illustrations/wanjel.webp",
+          "illustrations/war.webp",
+          "illustrations/warepil.webp",
+          "illustrations/weetkurrk.webp",
+          "illustrations/won.webp",
+          "illustrations/yerredkr.webp",
+          "illustrations/yurree.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "bugis",
+      "region": "Asia",
+      "constellations": 12,
+      "authors": [
+        "This sky culture was contributed by _Doina Bucur_ (d.bucur@utwente.nl). It was digitised for the cross-culture analysis of constellation line figures in reference [#3], `The network signature of constellation line figures`."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "chinese",
+      "region": "Asia",
+      "constellations": 318,
+      "authors": [
+        "This sky culture was initially contributed by _Karrie Berglund_ of Digitalis",
+        "Education Solutions, Inc. based on the Hong Kong Space Museum star maps.",
+        "Sun Shuwei contributed more than 200 Xingguans and more than 3,000 stars，based",
+        "primarily on the book _Chinese and Western Contrast Star Chart and Catalogue",
+        "1950.0_ by Yi Shitong.",
+        "Text rework by Stellarium's team."
+      ],
+      "clauses": [
+        {
+          "raw": "Su Song and Suzhou maps images: Public Domain",
+          "scope": "Su Song and Suzhou maps images",
+          "license": "public-domain"
+        },
+        {
+          "raw": "Text and line: CC BY-SA",
+          "scope": "Text and line",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA",
+          "public-domain"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "public-domain"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": false,
+        "attribution": false
+      },
+      "images": {
+        "count": 2,
+        "files": [
+          "hunxiang.webp",
+          "suzhouskxt.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "chinese_contemporary",
+      "region": "Asia",
+      "constellations": 88,
+      "authors": [
+        "This sky culture was originally contributed by Stellarium user _Sun Shuwei_ and",
+        "reworked by Stellarium team.",
+        "Constellation illustrations and lines are based on the _Modern Sky Culture_ of",
+        "Stellarium and traditional Chinese star names are based on _Chinese Sky",
+        "Culture_ of Stellarium.",
+        "Illustrations by Johan Meuris."
+      ],
+      "clauses": [
+        {
+          "raw": "Text and data: CC BY-SA",
+          "scope": "Text and data",
+          "license": "CC-BY-SA"
+        },
+        {
+          "raw": "Illustrations: Free Art License",
+          "scope": "Illustrations",
+          "license": "LAL"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA",
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 85,
+        "files": [
+          "illustrations/andromeda.webp",
+          "illustrations/antlia.webp",
+          "illustrations/apus.webp",
+          "illustrations/aquarius.webp",
+          "illustrations/aquila.webp",
+          "illustrations/ara.webp",
+          "illustrations/argonavis.webp",
+          "illustrations/aries.webp",
+          "illustrations/auriga.webp",
+          "illustrations/bootes.webp",
+          "illustrations/caelum.webp",
+          "illustrations/camelopardalis.webp",
+          "illustrations/cancer.webp",
+          "illustrations/canes-venatici.webp",
+          "illustrations/canis-major.webp",
+          "illustrations/canis-minor.webp",
+          "illustrations/capricornus.webp",
+          "illustrations/cassiopeia.webp",
+          "illustrations/centaurus.webp",
+          "illustrations/cepheus.webp",
+          "illustrations/cetus.webp",
+          "illustrations/chamaeleon.webp",
+          "illustrations/circinus.webp",
+          "illustrations/columba.webp",
+          "illustrations/coma-berenices.webp",
+          "illustrations/corona-australis.webp",
+          "illustrations/corona-borealis.webp",
+          "illustrations/corvus.webp",
+          "illustrations/crater.webp",
+          "illustrations/crux.webp",
+          "illustrations/cygnus.webp",
+          "illustrations/delphinus.webp",
+          "illustrations/dorado.webp",
+          "illustrations/draco.webp",
+          "illustrations/equuleus.webp",
+          "illustrations/eridanus.webp",
+          "illustrations/fornax.webp",
+          "illustrations/gemini.webp",
+          "illustrations/grus.webp",
+          "illustrations/hercules.webp",
+          "illustrations/horlogium.webp",
+          "illustrations/hydra.webp",
+          "illustrations/hydrus.webp",
+          "illustrations/indus.webp",
+          "illustrations/lacerta.webp",
+          "illustrations/leo-minor.webp",
+          "illustrations/leo.webp",
+          "illustrations/lepus.webp",
+          "illustrations/libra.webp",
+          "illustrations/lupus.webp",
+          "illustrations/lynx.webp",
+          "illustrations/lyra.webp",
+          "illustrations/mensa.webp",
+          "illustrations/microscopium.webp",
+          "illustrations/monoceros.webp",
+          "illustrations/musca.webp",
+          "illustrations/norma.webp",
+          "illustrations/octans.webp",
+          "illustrations/ophiuchus.webp",
+          "illustrations/orion.webp",
+          "illustrations/pavo.webp",
+          "illustrations/pegasus.webp",
+          "illustrations/perseus.webp",
+          "illustrations/phoenix.webp",
+          "illustrations/pictor.webp",
+          "illustrations/pisces.webp",
+          "illustrations/piscis-austrinus.webp",
+          "illustrations/pyxis.webp",
+          "illustrations/reticulum.webp",
+          "illustrations/sagitta.webp",
+          "illustrations/sagittarius.webp",
+          "illustrations/scorpius.webp",
+          "illustrations/sculptor.webp",
+          "illustrations/scutum.webp",
+          "illustrations/sextans.webp",
+          "illustrations/taurus.webp",
+          "illustrations/telescopium.webp",
+          "illustrations/triangulum-australe.webp",
+          "illustrations/triangulum.webp",
+          "illustrations/tucana.webp",
+          "illustrations/ursa-major.webp",
+          "illustrations/ursa-minor.webp",
+          "illustrations/virgo.webp",
+          "illustrations/volans.webp",
+          "illustrations/vulpecula.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "egyptian",
+      "region": "Middle East",
+      "constellations": 28,
+      "authors": [
+        "This sky culture was contributed by _Karrie Berglund_ of Digitalis Education",
+        "Solutions, Inc. based on the paper \"A Map of the Ancient Egyptian Firmament” by",
+        "Juan Antonio Belmonte.",
+        "This sky culture was updated by misibacsi (names of planets) and re-worked by",
+        "Susanne M Hoffmann."
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 1,
+        "files": [
+          "dendera_zodiac.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "hawaiian_starlines",
+      "region": "Oceania",
+      "constellations": 13,
+      "authors": [
+        "This sky culture was contributed in 2017 by teachers Darren Kamalu and",
+        "Christopher Blake, Students Jonah Apo, Nicholas Koanui, Brenden Aila and the",
+        "Celestial Navigation class at Kamehameha Schools Kapalama, Honolulu, Hawai’i.",
+        "Artwork by Kealoha Kaneakua.",
+        "Reworked by Susanne M Hoffmann."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 11,
+        "files": [
+          "illustrations/kekaa1d.webp",
+          "illustrations/kuamoobig.webp",
+          "illustrations/lu1d.webp",
+          "illustrations/lu2c.webp",
+          "illustrations/manaia.webp",
+          "illustrations/waa2.webp",
+          "kekaa1c.webp",
+          "kua1g.webp",
+          "kuamoo.webp",
+          "manaia1c.webp",
+          "waa.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "indian",
+      "region": "Asia",
+      "constellations": 28,
+      "authors": [
+        "[Tanmoy Saha](https://groups.google.com/forum/#!forum/sanskrit-programmers),",
+        "Vishvas Vasuki and contributors from the sanskrit-coders community: [github",
+        "page](https://github.com/sanskrit-coders).",
+        "Re-worked by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "inuit",
+      "region": "America",
+      "constellations": 11,
+      "authors": [
+        "This sky culture was contributed by _Karrie Berglund_ of Digitalis Education",
+        "Solutions, Inc. based primarily on the book __The Arctic Sky: Inuit Astronomy,",
+        "Star Lore and Legend__ by John MacDonald.",
+        "Illustrations by Johan Meuris.",
+        "Edited by Susanne M Hoffmann and the Stellarium's team."
+      ],
+      "clauses": [
+        {
+          "raw": "Text and data: GNU GPL v2.0",
+          "scope": "Text and data",
+          "license": "GPL-2.0"
+        },
+        {
+          "raw": "Illustrations: Free Art License",
+          "scope": "Illustrations",
+          "license": "LAL"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0",
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 11,
+        "files": [
+          "illustrations/blubber-container.webp",
+          "illustrations/breastbone.webp",
+          "illustrations/caribou.webp",
+          "illustrations/collarbones.webp",
+          "illustrations/dogs.webp",
+          "illustrations/lamp-stand.webp",
+          "illustrations/runners.webp",
+          "illustrations/the-one-behind.webp",
+          "illustrations/two-in-front.webp",
+          "illustrations/two-placed-far-apart.webp",
+          "illustrations/two-sunbeams.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "japanese_moon_stations",
+      "region": "Asia",
+      "constellations": 28,
+      "authors": [
+        "Text and data by Alexander Wolf",
+        "Clean-up by Susanne M Hoffmann and the Stellarium's team."
+      ],
+      "clauses": [
+        {
+          "raw": "Text and data: CC BY-SA",
+          "scope": "Text and data",
+          "license": "CC-BY-SA"
+        },
+        {
+          "raw": "Yasui's Map detail[4] used with authorisation from Steven Renshaw",
+          "scope": "all",
+          "license": null,
+          "note": "unrecognised"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [],
+        "derivatives": null,
+        "commercial": null,
+        "share_alike": null,
+        "attribution": null
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": [
+          "chart.webp"
+        ]
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": [
+        "Yasui's Map detail[4] used with authorisation from Steven Renshaw"
+      ],
+      "manual_review": {
+        "verdict": "allow",
+        "reviewed": "2026-08-08",
+        "clause": "Yasui's Map detail[4] used with authorisation from Steven Renshaw",
+        "rationale": "The permission covers one scanned map, not the sky culture as a whole; text and data are stated separately as CC BY-SA. Allowed for text and data only, on condition that the map is neither ingested nor served.",
+        "excluded_assets": [
+          "chart.webp"
+        ]
+      }
+    },
+    {
+      "id": "kamilaroi",
+      "region": "Oceania",
+      "constellations": 13,
+      "authors": [
+        "Text and lines: Robert S. Fuller from [Australian Indigenous Astronomy](http://www.aboriginalastronomy.com.au/)",
+        "Illustrations: Ghillar Michael Anderson",
+        "Technical re-work by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "Text, lines and illustrations: CC BY-NC-ND 4.0",
+          "scope": "Text, lines and illustrations",
+          "license": "CC-BY-NC-ND-4.0"
+        },
+        {
+          "raw": "Special permission is granted to Stellarium developers to include the licensed material.",
+          "scope": "all",
+          "license": null,
+          "note": "special_permission"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-NC-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": false,
+        "share_alike": false,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-NC-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": false,
+        "share_alike": false,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-NC-ND-4.0"
+        ],
+        "derivatives": false,
+        "commercial": false,
+        "share_alike": false,
+        "attribution": true
+      },
+      "images": {
+        "count": 13,
+        "files": [
+          "illustrations/Bandaarr.webp",
+          "illustrations/Birraybirray.webp",
+          "illustrations/Birringoloo.webp",
+          "illustrations/Gawaargay.webp",
+          "illustrations/Gawaargaynl.webp",
+          "illustrations/Miyaymiyay.webp",
+          "illustrations/MuraayMuyaay.webp",
+          "illustrations/OldDthillarandgunya.webp",
+          "illustrations/OldWiringin.webp",
+          "illustrations/Wadhaagudjaaylwan.webp",
+          "illustrations/WambaWamba.webp",
+          "illustrations/Warrawilbaarru.webp",
+          "illustrations/Yarran.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": true,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "korean",
+      "region": "Asia",
+      "constellations": 271,
+      "authors": [
+        "This sky culture was contributed by Stellarium user [Jeong,",
+        "Tae-Min](http://user.chollian.net/~jtm71/)",
+        "Reworked by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "lokono",
+      "region": "America",
+      "constellations": 11,
+      "authors": [
+        "This sky culture was contributed by [Konrad Rybka](konrad.rybka@gmail.com) and",
+        "produced with the help of Lokono speakers in Suriname (Cassipora) and",
+        "Guyana (Wakapoa). The research was carried out as part of the project supported",
+        "by a Rubicon postdoctoral grant from the Netherlands Organization for",
+        "Scientific Research (project number 446-15-012).",
+        "Quote as: Rybka, Konrad 2018. _Lokono sky culture: a description of Lokono",
+        "ethnoastronomical knowledge for Stellarium software_. Version 1.0",
+        "Technical clean-up: Susanne M Hoffmann, 2020"
+      ],
+      "clauses": [
+        {
+          "raw": "CC-BY NC",
+          "scope": "all",
+          "license": "CC-BY-NC"
+        },
+        {
+          "raw": "Special permission is also granted to Stellarium Labs to include the licensed material in the mobile application Stellarium.",
+          "scope": "all",
+          "license": null,
+          "note": "special_permission"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-NC"
+        ],
+        "derivatives": true,
+        "commercial": false,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-NC"
+        ],
+        "derivatives": true,
+        "commercial": false,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-NC"
+        ],
+        "derivatives": true,
+        "commercial": false,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 2,
+        "files": [
+          "lokono_map_1.webp",
+          "schulz.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": true,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "macedonian",
+      "region": "Europe",
+      "constellations": 19,
+      "authors": [
+        "This sky culture was contributed by _Vancho Stojkoski_ and _Gjore Cenev_ from",
+        "Macedonian Research Society based primarily on the book _Sky over Macedonia_",
+        "by Cenev G, 2004 [#1].",
+        "Technical re-work: Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 18,
+        "files": [
+          "illustrations/gumno.webp",
+          "illustrations/jarem.webp",
+          "illustrations/jastreb.webp",
+          "illustrations/komiti.webp",
+          "illustrations/krst.webp",
+          "illustrations/kvacka.webp",
+          "illustrations/lisica.webp",
+          "illustrations/masha.webp",
+          "illustrations/orach.webp",
+          "illustrations/petel.webp",
+          "illustrations/pirustija.webp",
+          "illustrations/sofra.webp",
+          "illustrations/svinji.webp",
+          "illustrations/svrdel.webp",
+          "illustrations/terezii.webp",
+          "illustrations/ushi.webp",
+          "illustrations/volci.webp",
+          "illustrations/volovi.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "mandar",
+      "region": "Asia",
+      "constellations": 6,
+      "authors": [
+        "This sky culture was contributed by _Doina Bucur_ (d.bucur@utwente.nl). It was digitised for the cross-culture analysis of constellation line figures in reference [#3], `The network signature of constellation line figures`."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "maori",
+      "region": "Oceania",
+      "constellations": 6,
+      "authors": [
+        "This sky culture is a contribution of Stellarium user [Dan",
+        "Smale](mailto:d.smale@niwa.co.nz)"
+      ],
+      "clauses": [
+        {
+          "raw": "Text and lines: CC BY-SA",
+          "scope": "Text and lines",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [],
+        "derivatives": null,
+        "commercial": null,
+        "share_alike": null,
+        "attribution": null
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "mongolian",
+      "region": "Asia",
+      "constellations": 4,
+      "authors": [
+        "This skyculture is a contribution from two users of Stellarium, [Anthony",
+        "Lagain](mailto:anthony.lagain@gmail.com) and [Batiste",
+        "Rousseau](mailto:batiste.rousseau@gmail.com) mainly based on oral tales of",
+        "numerous Mongolians met during a two months stay in Mongolia.",
+        "To learn more about them: [www.souslecieldemongolie.wordpress.com](http://souslecieldemongolie.wordpress.com/) (in French).",
+        "Re-worked and adapted by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 1,
+        "files": [
+          "doloon_burkhan.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "navajo",
+      "region": "America",
+      "constellations": 8,
+      "authors": [
+        "This sky culture was contributed by _Karrie Berglund_ of Digitalis Education",
+        "Solutions, Inc. based primarily on the book __Star Trails-Navajo__ by Don",
+        "Childrey."
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "norse",
+      "region": "Europe",
+      "constellations": 6,
+      "authors": [
+        "This sky culture was contributed by Stellarium user [Jonas Persson](mailto:jonas.persson@physics.org).",
+        "Homepage [link](https://www.ntnu.edu/employees/jonas.persson).",
+        "Description by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "northern_andes",
+      "region": "America",
+      "constellations": 5,
+      "authors": [
+        "Andres Ayala Quinatoa",
+        "reworked by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 8,
+        "files": [
+          "guerrero.webp",
+          "illustrations/guerrero.webp",
+          "illustrations/jaguar.webp",
+          "illustrations/mono.webp",
+          "illustrations/sapo.webp",
+          "jaguar.webp",
+          "mono.webp",
+          "sapo.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "romanian",
+      "region": "Europe",
+      "constellations": 39,
+      "authors": [
+        "This sky culture was contributed by Stellarium user Mircea Lite on behalf of",
+        "[Baia Mare Planetarium](planetariul_bm@yahoo.com), as a result of a project",
+        "called _Traditional Romanian Constellations_ developed in 2012-2013 by the",
+        "[Baia Mare Planetarium](https://www.planetariubm.ro)",
+        "([email](mailto:planetariubm@gmail.com)) and funded partially by the Romanian",
+        "Cultural Fond Administration.",
+        "It is primarily based on the book _Romanian peasants beliefs in stars and sky_",
+        "by Ion Ottescu.",
+        "The Romanian constellation lines, images, scripts and texts for movies prepared",
+        "by [Radu Lodina](mailto:rlodina@gmail.com) and [Ovidiu",
+        "Ignat](mailto:OviIgnat@yahoo.com).",
+        "Romanian constellation art done by [Zamfir Somcutean](naturazam@yahoo.com).",
+        "Adapted by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "Text, lines and illustrations: CC BY-SA",
+          "scope": "Text, lines and illustrations",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 39,
+        "files": [
+          "illustrations/CapraCuTreiIezi.webp",
+          "illustrations/CarulMare.webp",
+          "illustrations/CiobanulCuOile.webp",
+          "illustrations/CloscaCuPui.webp",
+          "illustrations/Coasa.webp",
+          "illustrations/FataCuColibita.webp",
+          "illustrations/Hora.webp",
+          "illustrations/JgheabulSiPutul.webp",
+          "illustrations/Tronul.webp",
+          "illustrations/arcasul.webp",
+          "illustrations/balaurul.webp",
+          "illustrations/barda.webp",
+          "illustrations/berbecul.webp",
+          "illustrations/calul.webp",
+          "illustrations/cantarul.webp",
+          "illustrations/carul-mic.webp",
+          "illustrations/catelul.webp",
+          "illustrations/chitul.webp",
+          "illustrations/corbul.webp",
+          "illustrations/crapii.webp",
+          "illustrations/crucea-mare.webp",
+          "illustrations/crucea-mica.webp",
+          "illustrations/dulaul.webp",
+          "illustrations/fecioara.webp",
+          "illustrations/omul.webp",
+          "illustrations/porumbita.webp",
+          "illustrations/racul.webp",
+          "illustrations/rarita.webp",
+          "illustrations/sarpele.webp",
+          "illustrations/scorpia.webp",
+          "illustrations/secera.webp",
+          "illustrations/sfredelul.webp",
+          "illustrations/tapul.webp",
+          "illustrations/taurul.webp",
+          "illustrations/trisfetitele.webp",
+          "illustrations/vacarul.webp",
+          "illustrations/varsatorul.webp",
+          "illustrations/vierii.webp",
+          "sagetatorul.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "ruelle",
+      "region": "Europe",
+      "constellations": 70,
+      "authors": [
+        "This sky culture was contributed by _Doina Bucur_ (d.bucur@utwente.nl). It was",
+        "digitised for the cross-culture analysis of constellation line figures in `The",
+        "network signature of constellation line figures`[#3]."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "sami",
+      "region": "Europe",
+      "constellations": 10,
+      "authors": [
+        "This sky culture was contributed by Stellarium user [Jonas Persson](mailto:jonas.persson@physics.org).",
+        "Homepage [link](https://www.ntnu.edu/employees/jonas.persson).",
+        "Technical rework by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "sardinian",
+      "region": "Europe",
+      "constellations": 11,
+      "authors": [
+        "These constellations have been created by the Stellarium's user [Giuseppe",
+        "Putzolu](mailto:giuseppe.putzolu@gmail.com).",
+        "Slightly re-added by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "siberian",
+      "region": "Asia",
+      "constellations": 3,
+      "authors": [
+        "Text and data by Alexander Wolf",
+        "Text adapted by Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "tongan",
+      "region": "Oceania",
+      "constellations": 11,
+      "authors": [
+        "This sky culture was contributed by Stellarium user [Dan",
+        "Smale](d.smale@niwa.co.nz)",
+        "Technical adaption: Susanne M Hoffmann"
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "tukano",
+      "region": "America",
+      "constellations": 11,
+      "authors": [
+        "[Walmir Thomazi Cardoso](mailto:walmir.astronomia@gmail.com) gathered this",
+        "information in a survey that is part of his PhD. Thesis of Ethnomathematics.",
+        "Illustrations were made by Antonio Gumercindo Taques dos Santos (Ticão) and",
+        "[Youssif Ganthous Filho](mailto:youssif@gmail.com).",
+        "Technical adaption: Stellarium's team"
+      ],
+      "clauses": [
+        {
+          "raw": "Text, lines and illustrations: CC BY-SA",
+          "scope": "Text, lines and illustrations",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 1,
+        "files": [
+          "Calendario_Tukano.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "tupi",
+      "region": "America",
+      "constellations": 7,
+      "authors": [
+        "This sky culture was contributed by Stellarium user _Paulo Marcelo Pontes_."
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "western",
+      "region": "Europe",
+      "constellations": 88,
+      "authors": [
+        "Stellarium's team.",
+        "Illustrations by Johan Meuris."
+      ],
+      "clauses": [
+        {
+          "raw": "Text and data: CC BY-SA",
+          "scope": "Text and data",
+          "license": "CC-BY-SA"
+        },
+        {
+          "raw": "Illustrations: Free Art License",
+          "scope": "Illustrations",
+          "license": "LAL"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA",
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "LAL"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 85,
+        "files": [
+          "illustrations/andromeda.webp",
+          "illustrations/antlia.webp",
+          "illustrations/apus.webp",
+          "illustrations/aquarius.webp",
+          "illustrations/aquila.webp",
+          "illustrations/ara.webp",
+          "illustrations/argonavis.webp",
+          "illustrations/aries.webp",
+          "illustrations/auriga.webp",
+          "illustrations/bootes.webp",
+          "illustrations/caelum.webp",
+          "illustrations/camelopardalis.webp",
+          "illustrations/cancer.webp",
+          "illustrations/canes-venatici.webp",
+          "illustrations/canis-major.webp",
+          "illustrations/canis-minor.webp",
+          "illustrations/capricornus.webp",
+          "illustrations/cassiopeia.webp",
+          "illustrations/centaurus.webp",
+          "illustrations/cepheus.webp",
+          "illustrations/cetus.webp",
+          "illustrations/chamaeleon.webp",
+          "illustrations/circinus.webp",
+          "illustrations/columba.webp",
+          "illustrations/coma-berenices.webp",
+          "illustrations/corona-australis.webp",
+          "illustrations/corona-borealis.webp",
+          "illustrations/corvus.webp",
+          "illustrations/crater.webp",
+          "illustrations/crux.webp",
+          "illustrations/cygnus.webp",
+          "illustrations/delphinus.webp",
+          "illustrations/dorado.webp",
+          "illustrations/draco.webp",
+          "illustrations/equuleus.webp",
+          "illustrations/eridanus.webp",
+          "illustrations/fornax.webp",
+          "illustrations/gemini.webp",
+          "illustrations/grus.webp",
+          "illustrations/hercules.webp",
+          "illustrations/horlogium.webp",
+          "illustrations/hydra.webp",
+          "illustrations/hydrus.webp",
+          "illustrations/indus.webp",
+          "illustrations/lacerta.webp",
+          "illustrations/leo-minor.webp",
+          "illustrations/leo.webp",
+          "illustrations/lepus.webp",
+          "illustrations/libra.webp",
+          "illustrations/lupus.webp",
+          "illustrations/lynx.webp",
+          "illustrations/lyra.webp",
+          "illustrations/mensa.webp",
+          "illustrations/microscopium.webp",
+          "illustrations/monoceros.webp",
+          "illustrations/musca.webp",
+          "illustrations/norma.webp",
+          "illustrations/octans.webp",
+          "illustrations/ophiuchus.webp",
+          "illustrations/orion.webp",
+          "illustrations/pavo.webp",
+          "illustrations/pegasus.webp",
+          "illustrations/perseus.webp",
+          "illustrations/phoenix.webp",
+          "illustrations/pictor.webp",
+          "illustrations/pisces.webp",
+          "illustrations/piscis-austrinus.webp",
+          "illustrations/pyxis.webp",
+          "illustrations/reticulum.webp",
+          "illustrations/sagitta.webp",
+          "illustrations/sagittarius.webp",
+          "illustrations/scorpius.webp",
+          "illustrations/sculptor.webp",
+          "illustrations/scutum.webp",
+          "illustrations/sextans.webp",
+          "illustrations/taurus.webp",
+          "illustrations/telescopium.webp",
+          "illustrations/triangulum-australe.webp",
+          "illustrations/triangulum.webp",
+          "illustrations/tucana.webp",
+          "illustrations/ursa-major.webp",
+          "illustrations/ursa-minor.webp",
+          "illustrations/virgo.webp",
+          "illustrations/volans.webp",
+          "illustrations/vulpecula.webp"
+        ],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "western_SnT",
+      "region": "Europe",
+      "constellations": 88,
+      "authors": [
+        "[Paul Krizak](mailto:paul.krizak@gmail.com) and [Jonathan E. Piskor](mailto:jonathan.e.piskor@gmail.com)",
+        "Rework by Stellarium Team."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA 2.0",
+          "scope": "all",
+          "license": "CC-BY-SA-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "western_hlad",
+      "region": "Europe",
+      "constellations": 88,
+      "authors": [
+        "Miroslav Broz created version 1.0 for Stellarium 0.13.1. Updates are available",
+        "[there](http://sirrah.troja.mff.cuni.cz/~mira/souhvezdi/).",
+        "Description re-worked by Stellarium's team."
+      ],
+      "clauses": [
+        {
+          "raw": "GNU GPL v2.0",
+          "scope": "all",
+          "license": "GPL-2.0"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    },
+    {
+      "id": "western_rey",
+      "region": "Europe",
+      "constellations": 172,
+      "authors": [
+        "Mike Richards and Georg Zotti.",
+        "This sky culture used to be for a long time an easy user-installable addon",
+        "example contributed by Mike Richards. It has been reworked following the 41st",
+        "reprint and completed with this description by Georg Zotti."
+      ],
+      "clauses": [
+        {
+          "raw": "CC BY-SA",
+          "scope": "all",
+          "license": "CC-BY-SA"
+        }
+      ],
+      "effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "text_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "image_effective": {
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "derivatives": true,
+        "commercial": true,
+        "share_alike": true,
+        "attribution": true
+      },
+      "images": {
+        "count": 0,
+        "files": [],
+        "excluded": []
+      },
+      "has_special_permission_to_stellarium": false,
+      "unrecognised_clauses": []
+    }
+  ]
+}

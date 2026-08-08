@@ -1,0 +1,20 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Built by skylore.ingest from the corpus; reproducible, so not tracked
+corpus.db
+corpus.db-wal
+corpus.db-shm
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store

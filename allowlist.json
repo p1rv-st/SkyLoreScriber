@@ -1,0 +1,781 @@
+{
+  "policy": "Cultures whose text/data licence permits derivative works. share_alike=true means output derived from that culture must carry the same licence; commercial=false means non-commercial use only. Special permissions granted to Stellarium in the source do not extend to this project. Artwork is licensed separately from prose in most cultures, so `images` carries its own terms: serve an illustration only where images.usable is true, and never serve a file listed in images.excluded.",
+  "generated_from": "stellarium-skycultures/*/description.md",
+  "allowed": [
+    {
+      "id": "anutan",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "aztec",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 19,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "belarusian",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 20,
+        "licenses": [
+          "LAL"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "blackfoot",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "boorong",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 27,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "bugis",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "chinese",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 2,
+        "licenses": [
+          "public-domain"
+        ],
+        "commercial": true,
+        "share_alike": false,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "chinese_contemporary",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 85,
+        "licenses": [
+          "LAL"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "egyptian",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 1,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "hawaiian_starlines",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 11,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "indian",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "inuit",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 11,
+        "licenses": [
+          "LAL"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "japanese_moon_stations",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [],
+        "commercial": null,
+        "share_alike": null,
+        "usable": false,
+        "excluded": [
+          "chart.webp"
+        ],
+        "excluded_because": "The permission covers one scanned map, not the sky culture as a whole; text and data are stated separately as CC BY-SA. Allowed for text and data only, on condition that the map is neither ingested nor served."
+      },
+      "manual_review": {
+        "reviewed": "2026-08-08",
+        "clause": "Yasui's Map detail[4] used with authorisation from Steven Renshaw",
+        "rationale": "The permission covers one scanned map, not the sky culture as a whole; text and data are stated separately as CC BY-SA. Allowed for text and data only, on condition that the map is neither ingested nor served."
+      }
+    },
+    {
+      "id": "korean",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "lokono",
+      "licenses": [
+        "CC-BY-NC"
+      ],
+      "commercial": false,
+      "share_alike": true,
+      "images": {
+        "count": 2,
+        "licenses": [
+          "CC-BY-NC"
+        ],
+        "commercial": false,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "macedonian",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 18,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "mandar",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "maori",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [],
+        "commercial": null,
+        "share_alike": null,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "mongolian",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 1,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "navajo",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "norse",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "northern_andes",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 8,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "romanian",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 39,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "ruelle",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "sami",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "sardinian",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "siberian",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "tongan",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "tukano",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 1,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "tupi",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "western",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 85,
+        "licenses": [
+          "LAL"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": true,
+        "excluded": []
+      }
+    },
+    {
+      "id": "western_SnT",
+      "licenses": [
+        "CC-BY-SA-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "western_hlad",
+      "licenses": [
+        "GPL-2.0"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "GPL-2.0"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    },
+    {
+      "id": "western_rey",
+      "licenses": [
+        "CC-BY-SA"
+      ],
+      "commercial": true,
+      "share_alike": true,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-SA"
+        ],
+        "commercial": true,
+        "share_alike": true,
+        "usable": false,
+        "excluded": []
+      }
+    }
+  ],
+  "allowed_commercial": [
+    "anutan",
+    "aztec",
+    "belarusian",
+    "blackfoot",
+    "boorong",
+    "bugis",
+    "chinese",
+    "chinese_contemporary",
+    "egyptian",
+    "hawaiian_starlines",
+    "indian",
+    "inuit",
+    "japanese_moon_stations",
+    "korean",
+    "macedonian",
+    "mandar",
+    "maori",
+    "mongolian",
+    "navajo",
+    "norse",
+    "northern_andes",
+    "romanian",
+    "ruelle",
+    "sami",
+    "sardinian",
+    "siberian",
+    "tongan",
+    "tukano",
+    "tupi",
+    "western",
+    "western_SnT",
+    "western_hlad",
+    "western_rey"
+  ],
+  "allowed_images": [
+    "aztec",
+    "belarusian",
+    "boorong",
+    "chinese",
+    "chinese_contemporary",
+    "egyptian",
+    "hawaiian_starlines",
+    "inuit",
+    "lokono",
+    "macedonian",
+    "mongolian",
+    "northern_andes",
+    "romanian",
+    "tukano",
+    "western"
+  ],
+  "rejected": [
+    {
+      "id": "arabic_al-sufi",
+      "licenses": [
+        "CC-BY-ND-4.0"
+      ],
+      "commercial": true,
+      "share_alike": false,
+      "images": {
+        "count": 49,
+        "licenses": [
+          "public-domain"
+        ],
+        "commercial": true,
+        "share_alike": false,
+        "usable": true,
+        "excluded": []
+      },
+      "reasons": [
+        "no-derivatives clause on the text/data"
+      ]
+    },
+    {
+      "id": "arabic_ancient",
+      "licenses": [
+        "CC-BY-ND-4.0"
+      ],
+      "commercial": true,
+      "share_alike": false,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "commercial": true,
+        "share_alike": false,
+        "usable": false,
+        "excluded": []
+      },
+      "reasons": [
+        "no-derivatives clause on the text/data"
+      ]
+    },
+    {
+      "id": "arabic_arabian_peninsula",
+      "licenses": [
+        "CC-BY-ND-4.0"
+      ],
+      "commercial": true,
+      "share_alike": false,
+      "images": {
+        "count": 1,
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "commercial": true,
+        "share_alike": false,
+        "usable": false,
+        "excluded": []
+      },
+      "reasons": [
+        "no-derivatives clause on the text/data"
+      ]
+    },
+    {
+      "id": "arabic_lunar_stations",
+      "licenses": [
+        "CC-BY-ND-4.0"
+      ],
+      "commercial": true,
+      "share_alike": false,
+      "images": {
+        "count": 0,
+        "licenses": [
+          "CC-BY-ND-4.0"
+        ],
+        "commercial": true,
+        "share_alike": false,
+        "usable": false,
+        "excluded": []
+      },
+      "reasons": [
+        "no-derivatives clause on the text/data"
+      ]
+    },
+    {
+      "id": "kamilaroi",
+      "licenses": [
+        "CC-BY-NC-ND-4.0"
+      ],
+      "commercial": false,
+      "share_alike": false,
+      "images": {
+        "count": 13,
+        "licenses": [
+          "CC-BY-NC-ND-4.0"
+        ],
+        "commercial": false,
+        "share_alike": false,
+        "usable": false,
+        "excluded": []
+      },
+      "reasons": [
+        "no-derivatives clause on the text/data"
+      ]
+    }
+  ]
+}
