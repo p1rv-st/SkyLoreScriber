@@ -5,3 +5,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = []
+
+# The query layer, the tools and the whole gold set run with no dependencies at all --
+# that is worth keeping, so the embedder is opt-in. ONNX Runtime rather than torch: the
+# workload is 1020 vectors embedded once plus one short vector per query, which needs no
+# GPU, and torch's Windows CUDA wheels are multi-gigabyte for nothing. Converting weights
+# to ONNX needs torch once, on a developer machine, and never at runtime.
+[project.optional-dependencies]
+embed = [
+    "onnxruntime>=1.17",
+    "tokenizers>=0.15",
+    "numpy>=1.26",
+]
