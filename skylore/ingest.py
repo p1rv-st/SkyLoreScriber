@@ -25,6 +25,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from . import corpus, po
+from .lang import LANGUAGES, SOURCE_LANG, TRANSLATION_LANGS  # noqa: F401  (re-exported)
 
 ROOT = Path(__file__).resolve().parent.parent
 CORPUS_DIR = ROOT / "stellarium-skycultures"
@@ -32,13 +33,7 @@ ALLOWLIST = ROOT / "allowlist.json"
 SCHEMA = Path(__file__).resolve().parent / "schema.sql"
 DATABASE = ROOT / "corpus.db"
 
-SCHEMA_VERSION = 1
-
-# English is the source language: `description.md` is written in it and `en.po` carries
-# empty translations. The rest are the interface languages we materialise.
-SOURCE_LANG = "en"
-TRANSLATION_LANGS = ("ru", "es", "zh_CN")
-LANGUAGES = (SOURCE_LANG, *TRANSLATION_LANGS)
+SCHEMA_VERSION = 3  # 2: names_fts folds diacritics; 3: embeddings keyed by (section, model)
 
 
 def corpus_commit() -> str:

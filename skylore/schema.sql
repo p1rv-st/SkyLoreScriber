@@ -163,16 +163,21 @@ CREATE INDEX ix_names_value         ON names(value COLLATE NOCASE);
 -- tokeniser mishandles (毕宿 does not tokenise under unicode61 at all), and callers
 -- need substring and near-miss matching more than they need relevance ranking.
 --
+-- `remove_diacritics` because the queries and the data disagree about accents: 897
+-- `pronounce` rows exist precisely so a user can type a romanisation, and they are
+-- stored fully accented (Bìxiù). Without folding, "Bixiu" matches nothing -- the
+-- field is unusable by exactly the people it is for.
+--
 -- Callers must handle one limit: a query shorter than three characters forms no
--- trigram and matches nothing here. That is not a rare edge case -- 237 of the
--- corpus's native names are two-character CJK -- so a search of fewer than three
--- characters has to fall back to `value LIKE '%q%'` against `names`, which is a
--- trivial scan at this table's size.
+-- trigram and matches nothing here. That is not a rare edge case -- 1222 name rows
+-- are shorter than three characters, 237 of them two-character CJK -- so a search
+-- of fewer than three characters has to fall back to `value LIKE '%q%'` against
+-- `names`, which is a trivial scan at this table's size.
 CREATE VIRTUAL TABLE names_fts USING fts5(
     value,
     content = 'names',
     content_rowid = 'id',
-    tokenize = 'trigram'
+    tokenize = 'trigram remove_diacritics 1'
 );
 
 -- ────────────────────────────────── prose ──────────────────────────────────
@@ -223,11 +228,35 @@ CREATE VIRTUAL TABLE sections_fts USING fts5(
     tokenize = "unicode61 remove_diacritics 2"
 );
 
+-- Keyed by (section, model) rather than by section alone, so several candidate models
+-- can be held at once and compared against the gold set instead of chosen by name.
+-- Which languages carry vectors is a property of the model: a genuinely cross-lingual
+-- one can serve a Russian query from the English vector, and `embedding_models` records
+-- what was actually embedded so a query does not have to guess.
+-- `window` exists because 54 of 1020 sections exceed a 512-token context, and they are
+-- the long, information-dense ones most worth retrieving. A section too long to embed
+-- whole becomes several overlapping windows scored independently, with the best window
+-- standing for the section. The *retrieval unit is still the whole section* -- windows
+-- never surface, they only carry vectors -- so this does not reopen the chunking
+-- decision. window = 0 means the section fitted.
 CREATE TABLE embeddings (
-    section_id INTEGER PRIMARY KEY REFERENCES sections(id) ON DELETE CASCADE,
+    section_id INTEGER NOT NULL REFERENCES sections(id) ON DELETE CASCADE,
     model      TEXT    NOT NULL,
+    window     INTEGER NOT NULL DEFAULT 0,
     dim        INTEGER NOT NULL,
-    vector     BLOB    NOT NULL           -- float32, L2-normalised: cosine is a dot product
+    vector     BLOB    NOT NULL,          -- float32, L2-normalised: cosine is a dot product
+    PRIMARY KEY (section_id, model, window)
+);
+CREATE INDEX ix_embeddings_model ON embeddings(model);
+
+CREATE TABLE embedding_models (
+    model        TEXT PRIMARY KEY,
+    dim          INTEGER NOT NULL,
+    languages    TEXT    NOT NULL,        -- JSON array of the langs embedded
+    query_prefix TEXT    NOT NULL DEFAULT '',  -- e5 wants "query: "; bge-m3 wants nothing
+    text_prefix  TEXT    NOT NULL DEFAULT '',  -- ...and "passage: " on the indexed side
+    pooling      TEXT    NOT NULL,        -- mean | cls
+    built_at     TEXT    NOT NULL
 );
 
 -- ────────────────────────────────── views ──────────────────────────────────
