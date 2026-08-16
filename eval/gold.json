@@ -1,0 +1,632 @@
+{
+  "about": "Gold evaluation set. Every expectation is derived from corpus.db, not invented: tools/evaluate.py --validate fails if any expected culture, HIP, constellation or heading path does not exist. `path` names the mechanism that should answer; `retrieval` questions need search_lore and are pending until step 6. `probe` is what the tool receives, kept separate from `question` so the set measures what comes back rather than how an agent phrases a call.",
+  "paths": {
+    "catalogue": "find_cultures",
+    "name": "find_constellation",
+    "star": "lookup_star",
+    "article": "get_culture_article",
+    "retrieval": "search_lore (step 6, not yet built)"
+  },
+  "questions": [
+    {
+      "id": "cross-01",
+      "question": "Which sky cultures draw a figure through the three stars of Orion's Belt?",
+      "probe": "Alnilam",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [26311], "min_cultures_drawing": 25},
+      "why": "The widest-shared asterism in the corpus: 29-30 cultures draw through each belt star. Tests the constellation_lines join, not the vector path."
+    },
+    {
+      "id": "cross-02",
+      "question": "Aldebaran has names in many traditions. Which cultures name it, and what do they call it?",
+      "probe": "Aldebaran",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [21421], "cultures": ["bugis", "boorong", "inuit", "chinese", "romanian"], "min_cultures_naming": 10},
+      "why": "The best-named star in the corpus at 11 cultures. Also the worst case for response size, at 24 cultures drawing figures through it."
+    },
+    {
+      "id": "cross-03",
+      "question": "What is the pole star called in different traditions?",
+      "probe": "Polaris",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [11767], "cultures": ["inuit", "mongolian", "norse", "belarusian", "blackfoot", "siberian"], "min_cultures_naming": 12},
+      "why": "14 cultures name Polaris, more than any other star. 'Never Moves', 'Golden Stake', 'The Nail' - a good test of whether the whole name dictionary survives."
+    },
+    {
+      "id": "cross-04",
+      "question": "Who names Sirius, and as what?",
+      "probe": "Sirius",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [32349], "cultures": ["boorong", "lokono", "hawaiian_starlines", "tongan", "inuit", "sardinian"], "min_cultures_naming": 10},
+      "why": "12 cultures, spread across four continents."
+    },
+    {
+      "id": "cross-05",
+      "question": "Which cultures see something in the Pleiades?",
+      "probe": "Alcyone",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [17702], "cultures": ["maori"], "min_cultures_drawing": 15},
+      "why": "PLAN names this one specifically. 18 cultures draw through Alcyone but only 3 name the star itself - the case where 'names' and 'draws' must not be merged."
+    },
+    {
+      "id": "cross-06",
+      "question": "Which traditions have a name for Antares?",
+      "probe": "Antares",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [80763], "min_cultures_naming": 6, "min_cultures_drawing": 15},
+      "why": "Southern-sky star with broad but not universal coverage."
+    },
+    {
+      "id": "cross-07",
+      "question": "What do different cultures call Vega?",
+      "probe": "Vega",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [91262], "min_cultures_naming": 7},
+      "why": "Northern counterpart to cross-06."
+    },
+    {
+      "id": "cross-08",
+      "question": "Which cultures draw a figure through Acrux, in the Southern Cross?",
+      "probe": "Acrux",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [60718], "min_cultures_drawing": 15},
+      "why": "19 cultures draw through it but only 3 name it. Tests that a southern-hemisphere question is not answered only from European sources."
+    },
+    {
+      "id": "cross-09",
+      "question": "Who names Canopus?",
+      "probe": "Canopus",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [30438], "min_cultures_naming": 5},
+      "why": "Invisible from most of Europe, so the answer should lean Oceanic and southern."
+    },
+    {
+      "id": "cross-10",
+      "question": "Which cultures name Betelgeuse?",
+      "probe": "Betelgeuse",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [27989], "min_cultures_naming": 5, "min_cultures_drawing": 15},
+      "why": "Orion again, from the star side rather than the figure side."
+    },
+
+    {
+      "id": "name-01",
+      "question": "What is the Chinese lunar mansion 毕宿?",
+      "probe": "毕宿",
+      "lang": "zh-Hans",
+      "path": "name",
+      "expect": {"constellations": ["CON chinese 001"], "cultures": ["chinese"]},
+      "why": "Two-character CJK: unreachable through trigram FTS, so this fails outright without the LIKE fallback."
+    },
+    {
+      "id": "name-02",
+      "question": "The Bugis call a star Wara-wara. Which star is it and what does the name mean?",
+      "probe": "Wara-wara",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [21421], "cultures": ["bugis"]},
+      "why": "A native name as the entry point - one of the five keys lookup_star must accept."
+    },
+    {
+      "id": "name-03",
+      "question": "What is Gellarlec in Boorong astronomy?",
+      "probe": "Gellarlec",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [21421], "cultures": ["boorong"]},
+      "why": "Boorong has no glosses at all for this star, so the answer must fall through to the native name rather than return nothing."
+    },
+    {
+      "id": "name-04",
+      "question": "The Lokono call a star Mali. Which one?",
+      "probe": "Mali",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [32349], "cultures": ["lokono"]},
+      "why": "Short native name, four characters - just over the trigram floor."
+    },
+    {
+      "id": "name-05",
+      "question": "What is Matariki?",
+      "probe": "Matariki",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [17702], "cultures": ["maori"]},
+      "why": "Stored as a pronounce row, not a gloss. A resolver that only looked at glosses would miss it."
+    },
+    {
+      "id": "name-06",
+      "question": "In Hawaiian tradition, which star is A‘a?",
+      "probe": "A‘a",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [32349], "cultures": ["hawaiian_starlines"]},
+      "why": "Two characters plus an okina: tests both the short-query fallback and non-ASCII punctuation."
+    },
+    {
+      "id": "name-07",
+      "question": "What does Warepil refer to in Boorong astronomy?",
+      "probe": "Warepil",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [32349], "cultures": ["boorong"]},
+      "why": "Same star as name-04 and name-06 from a third tradition."
+    },
+    {
+      "id": "name-08",
+      "question": "Which star do Tongans call Ma'afulele?",
+      "probe": "Ma'afulele",
+      "lang": "en",
+      "path": "star",
+      "expect": {"hips": [32349], "cultures": ["tongan"]},
+      "why": "Apostrophe in the query, which must not be read as syntax."
+    },
+    {
+      "id": "name-09",
+      "question": "What is Aña in Tukano astronomy?",
+      "probe": "Aña",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["tukano"]},
+      "why": "Three characters with a tilde. Tukano is also the culture whose index.json misspells `description`."
+    },
+    {
+      "id": "name-10",
+      "question": "What is Guirá Nhandu in Tupi astronomy?",
+      "probe": "Guirá Nhandu",
+      "lang": "en",
+      "path": "name",
+      "expect": {"constellations": ["CON tupi 001"], "cultures": ["tupi"]},
+      "why": "Accented native name; has glosses in all four languages, so it also checks the full dictionary."
+    },
+    {
+      "id": "name-11",
+      "question": "What is Іллёў воз in Belarusian folk astronomy?",
+      "probe": "Іллёў воз",
+      "lang": "ru",
+      "path": "name",
+      "expect": {"cultures": ["belarusian"]},
+      "why": "Cyrillic native name, queried in Cyrillic."
+    },
+    {
+      "id": "name-12",
+      "question": "What do Macedonians call the constellation known as арамии?",
+      "probe": "арамии",
+      "lang": "ru",
+      "path": "name",
+      "expect": {"cultures": ["macedonian"]},
+      "why": "Cyrillic again, and a culture with only 19 constellations."
+    },
+    {
+      "id": "name-13",
+      "question": "What is Su Pinnetu in Sardinian tradition?",
+      "probe": "Su Pinnetu",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["sardinian"]},
+      "why": "A regional European culture that is easy to lose behind the four western ones."
+    },
+    {
+      "id": "name-14",
+      "question": "What is Te Kope in Anutan astronomy?",
+      "probe": "Te Kope",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["anutan"]},
+      "why": "Anuta is a tiny Polynesian island culture with 11 constellations."
+    },
+    {
+      "id": "name-15",
+      "question": "What is Aagjuuk in Inuit astronomy?",
+      "probe": "Aagjuuk",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["inuit"]},
+      "why": "One of the 29 constellations carrying prose from index.json, so the answer should include that note."
+    },
+    {
+      "id": "name-16",
+      "question": "What is Hithikoya in Lokono astronomy?",
+      "probe": "Hithikoya",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["lokono"]},
+      "why": "Lokono constellation whose prose lives in a ##### subsection, not in index.json - the second prose source."
+    },
+    {
+      "id": "name-17",
+      "question": "What is Carul Mare in Romanian folk astronomy?",
+      "probe": "Carul Mare",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["romanian"]},
+      "why": "Romanian has 39 constellations and full four-language glosses."
+    },
+    {
+      "id": "name-18",
+      "question": "What is Bintoѐng Bola Kѐppang?",
+      "probe": "Bintoѐng Bola Kѐppang",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["bugis"]},
+      "why": "Long native name with unusual Cyrillic-lookalike diacritics in the source."
+    },
+    {
+      "id": "name-19",
+      "question": "What is Bittoéng Sapo Kepang in Mandar astronomy?",
+      "probe": "Bittoéng Sapo Kepang",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["mandar"]},
+      "why": "Near-identical to name-18 in another Sulawesi culture: tests that fuzzy matching does not collapse the two."
+    },
+    {
+      "id": "name-20",
+      "question": "What is Ke Ka o Makali'i?",
+      "probe": "Ke Ka o Makali",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["hawaiian_starlines"]},
+      "why": "Hawaiian star line; the probe is deliberately truncated before the okina to test prefix matching."
+    },
+    {
+      "id": "name-21",
+      "question": "What is Toloatonga in Tongan astronomy?",
+      "probe": "Toloatonga",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["tongan"]},
+      "why": "Tongan constellation names sit in an Extras section rather than Description."
+    },
+    {
+      "id": "name-22",
+      "question": "What is Wanjel in Boorong astronomy?",
+      "probe": "Wanjel",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["boorong"]},
+      "why": "Boorong has 29 constellations, the largest non-Eurasian set in the corpus."
+    },
+    {
+      "id": "name-23",
+      "question": "Which Navajo constellation is called Revolving Male?",
+      "probe": "Revolving Male",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["navajo"]},
+      "why": "Navajo has no native-script names at all, only English glosses - the opposite shape from name-01."
+    },
+    {
+      "id": "name-24",
+      "question": "What is Aurvandil's Toe in Norse astronomy?",
+      "probe": "Aurvandil",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["norse"]},
+      "why": "Norse has only 6 constellations; an apostrophe in the full name, so the probe stops short of it."
+    },
+    {
+      "id": "name-25",
+      "question": "What do Siberian peoples call the elk constellation?",
+      "probe": "Elk",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["siberian"]},
+      "why": "Siberian has 3 constellations. 'Elk' is also a substring of other words, so this exercises the exact-before-substring tiering."
+    },
+    {
+      "id": "name-26",
+      "question": "What is La Petite Ourse in the Ruelle sky culture?",
+      "probe": "La Petite Ourse",
+      "lang": "en",
+      "path": "name",
+      "expect": {"cultures": ["ruelle"]},
+      "why": "Ruelle declares native_lang 'fr' but French is not ingested, so its names are reachable only as native rows."
+    },
+
+    {
+      "id": "lang-01",
+      "question": "Что такое созвездие Орион в западной традиции?",
+      "probe": "Orion",
+      "lang": "ru",
+      "path": "name",
+      "expect": {"cultures": ["western"], "expect_fallback": true},
+      "why": "PLAN asks specifically for this. `western` has zero Russian glosses, so the answer must come back flagged as a fallback rather than presented as a Russian translation."
+    },
+    {
+      "id": "lang-02",
+      "question": "Что такое созвездие «Сетка» в китайской традиции?",
+      "probe": "Сетка",
+      "lang": "ru",
+      "path": "name",
+      "expect": {"constellations": ["CON chinese 001"], "cultures": ["chinese"], "expect_no_fallback": true},
+      "why": "The mirror of lang-01: chinese has full Russian coverage, so this one must NOT be flagged. If both look alike, the flag is worthless."
+    },
+    {
+      "id": "lang-03",
+      "question": "Какая звезда называется «Горящий уголь»?",
+      "probe": "Горящий уголь",
+      "lang": "ru",
+      "path": "star",
+      "expect": {"hips": [21421], "cultures": ["bugis"]},
+      "why": "A Russian query matching Russian text directly, with no query translation. This is the payoff of materialising the po catalogues."
+    },
+    {
+      "id": "lang-04",
+      "question": "Какая звезда у инуитов называется «Дух полярного медведя»?",
+      "probe": "Дух полярного медведя",
+      "lang": "ru",
+      "path": "star",
+      "expect": {"hips": [21421], "cultures": ["inuit"]},
+      "why": "Same star, different culture, in Russian - so a correct answer must distinguish the two rather than merge them."
+    },
+    {
+      "id": "lang-05",
+      "question": "¿Qué estrella llaman los Bugis «Carbón encendido»?",
+      "probe": "Carbon encendido",
+      "lang": "es",
+      "path": "star",
+      "expect": {"hips": [21421], "cultures": ["bugis"]},
+      "why": "Spanish, and the probe is deliberately unaccented: without remove_diacritics on names_fts this returns nothing."
+    },
+    {
+      "id": "lang-06",
+      "question": "图皮人的「白美洲鸵」是什么星座？",
+      "probe": "白美洲鸵",
+      "lang": "zh-Hans",
+      "path": "name",
+      "expect": {"constellations": ["CON tupi 001"], "cultures": ["tupi"]},
+      "why": "A Chinese query about a South American culture: the language of the question and the culture of the answer are unrelated, which is the normal case and easy to get wrong."
+    },
+    {
+      "id": "lang-07",
+      "question": "毕宿的罗马字拼音是什么？",
+      "probe": "Bixiu",
+      "lang": "zh-Hans",
+      "path": "name",
+      "expect": {"constellations": ["CON chinese 001"], "cultures": ["chinese"]},
+      "why": "Unaccented romanisation of an accented pronounce row (Bìxiù). 897 pronounce rows exist for exactly this kind of query."
+    },
+
+    {
+      "id": "cat-01",
+      "question": "Which Oceanian sky cultures does this corpus cover?",
+      "probe": "",
+      "lang": "en",
+      "path": "catalogue",
+      "region": "Oceania",
+      "expect": {"cultures": ["anutan", "boorong", "hawaiian_starlines", "maori", "tongan"], "exact_cultures": true},
+      "why": "The catalogue is returned whole and unranked, so this is exactly checkable."
+    },
+    {
+      "id": "cat-02",
+      "question": "Are there any Middle Eastern sky cultures here?",
+      "probe": "",
+      "lang": "en",
+      "path": "catalogue",
+      "region": "Middle East",
+      "expect": {"cultures": ["egyptian"], "exact_cultures": true},
+      "why": "A region with exactly one culture, because four Arabic ones were excluded for no-derivatives clauses. An answer that implies broader coverage is wrong."
+    },
+    {
+      "id": "cat-03",
+      "question": "Which sky cultures come from the Americas?",
+      "probe": "",
+      "lang": "en",
+      "path": "catalogue",
+      "region": "America",
+      "expect": {"cultures": ["lokono", "tukano", "tupi", "navajo", "inuit", "blackfoot", "aztec", "northern_andes"], "exact_cultures": true},
+      "why": "Eight cultures; the set is small enough to assert exactly."
+    },
+
+    {
+      "id": "article-01",
+      "question": "What does the Lokono calendar of spirits describe?",
+      "probe": "lokono",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["lokono"], "sections": [["lokono", "Description › 3. Calendar of spirits"]]},
+      "why": "Lokono is the only real ethnographic monograph in the corpus at 8604 words. If answers here are coherent, the system works."
+    },
+    {
+      "id": "article-02",
+      "question": "What does 'wiwa' mean to the Lokono, and how does it relate to the year?",
+      "probe": "lokono",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["lokono"], "sections": [["lokono", "Description › 4. _Wiwa_, the star and the year"]]},
+      "why": "The heading carries markdown emphasis, which a naive heading match would fail on."
+    },
+    {
+      "id": "article-03",
+      "question": "How did the Lokono watch the sky in practice?",
+      "probe": "lokono",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["lokono"], "sections": [["lokono", "Description › 5. Sky watching practices"]]},
+      "why": "Third lokono question, per PLAN's request for several."
+    },
+    {
+      "id": "article-04",
+      "question": "What do Siberian peoples say about the Pleiades?",
+      "probe": "siberian",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["siberian"], "sections": [["siberian", "Description › Pleiades"]]},
+      "why": "A culture with only 3 constellations but a dedicated Pleiades section - structured data alone would understate it."
+    },
+    {
+      "id": "article-05",
+      "question": "What is a nakshatra in Indian astronomy?",
+      "probe": "indian",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["indian"], "sections": [["indian", "Description › Nakṣatra (नक्षत्रम्)"]]},
+      "why": "Heading contains Devanagari and IAST diacritics."
+    },
+    {
+      "id": "article-06",
+      "question": "What are Hawaiian star lines?",
+      "probe": "hawaiian_starlines",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["hawaiian_starlines"], "sections": [["hawaiian_starlines", "Description › Star Lines"]]},
+      "why": "The organising concept of the whole culture, and not a constellation."
+    },
+    {
+      "id": "article-07",
+      "question": "What is the Azure Dragon of the East in the Japanese lunar stations?",
+      "probe": "japanese_moon_stations",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["japanese_moon_stations"], "sections": [["japanese_moon_stations", "Extras › The Azure Dragon of the East (Spring)"]]},
+      "why": "The culture carrying the excluded asset. Any answer here must reach the reader with no reference to chart.webp."
+    },
+    {
+      "id": "article-08",
+      "question": "What are the dark constellations of the northern Andes?",
+      "probe": "northern_andes",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["northern_andes"], "sections": [["northern_andes", "Description › Clear Constellations, Asterisms and Guidelines in the Andes."]]},
+      "why": "Dark constellations are defined by the absence of stars, so nothing in the structured tables represents them."
+    },
+    {
+      "id": "article-09",
+      "question": "What is a xingguan in Chinese astronomy?",
+      "probe": "chinese",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["chinese"], "sections": [["chinese", "Description › Asterisms (Xingguans)"]]},
+      "why": "The largest culture at 318 constellations; the concept has no European equivalent."
+    },
+    {
+      "id": "article-10",
+      "question": "Where does the Korean sky culture come from?",
+      "probe": "korean",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["korean"], "sections": [["korean", "Description › Origin"]]},
+      "why": "271 constellations but a very short article - the inverse of the lokono case."
+    },
+    {
+      "id": "article-11",
+      "question": "What is the Aztec New Fire ceremony and its connection to the sky?",
+      "probe": "aztec",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["aztec"], "sections": [["aztec", "Constellations › Mamalhuaztli"]]},
+      "why": "Aztec carries 5 inline images and is licensed for them, so this is the positive counterpart to article-07."
+    },
+    {
+      "id": "article-12",
+      "question": "How do the Mongolians describe the planets and stars?",
+      "probe": "mongolian",
+      "lang": "en",
+      "path": "article",
+      "expect": {"cultures": ["mongolian"], "sections": [["mongolian", "Description › Planets and Stars"]]},
+      "why": "Mongolian has 4 constellations but a 13k-character article, second longest in the corpus."
+    },
+
+    {
+      "id": "retr-01",
+      "question": "Which cultures use a star to mark the beginning of the rainy season?",
+      "probe": "star marking the beginning of the rainy season",
+      "lang": "en",
+      "path": "retrieval",
+      "expect": {"cultures": ["tupi"], "min_cultures": 1},
+      "why": "Semantic, spans cultures, and matches no name. Tupi ties the Old Man's appearance to 'the start of the rainy season in the North' - the only culture in the corpus stating that link explicitly, so a vague answer cannot pass by accident."
+    },
+    {
+      "id": "retr-02",
+      "question": "How was the sky used for navigation at sea?",
+      "probe": "using stars to navigate at sea",
+      "lang": "en",
+      "path": "retrieval",
+      "expect": {"cultures": ["anutan", "hawaiian_starlines"], "min_cultures": 2},
+      "why": "Anuta and Hawaii both document seafaring; the phrasing appears in neither as a heading."
+    },
+    {
+      "id": "retr-03",
+      "question": "Какие культуры связывают созвездия с сельскохозяйственным календарём?",
+      "probe": "созвездия и земледельческий календарь",
+      "lang": "ru",
+      "path": "retrieval",
+      "expect": {"cultures": ["northern_andes", "tukano"], "min_cultures": 3},
+      "why": "A Russian semantic query. Northern Andes ties four festivals to the agricultural calendar and Tukano marks 'rain periods, drought, planting and harvesting' by sunrise and sunset positions; both state it only in prose. BM25 over Russian sections should carry it - this is why all four languages are indexed."
+    },
+    {
+      "id": "retr-04",
+      "question": "Which traditions describe constellations whose star patterns have been lost?",
+      "probe": "constellation whose stars are no longer known",
+      "lang": "en",
+      "path": "retrieval",
+      "expect": {"cultures": ["lokono"], "min_cultures": 1},
+      "why": "Lokono documents ~33 objects while index.json has 11. A structured-only answer understates the culture, so this measures whether prose retrieval closes that gap (TECHDEBT.md §6)."
+    },
+    {
+      "id": "retr-05",
+      "question": "What do different cultures call the Milky Way, and what do they take it to be?",
+      "probe": "what the Milky Way is called and what it represents",
+      "lang": "en",
+      "path": "retrieval",
+      "expect": {"cultures": ["mongolian", "sami", "northern_andes"], "min_cultures": 5},
+      "why": "11 cultures discuss it in prose and it has no constellation row anywhere, so no structured tool can answer this at all. Mongolian calls it Tengeriin Zadas, Sami Lodde-raiddaras ('bird path'), and northern_andes gives it a section of its own. The broadest purely-prose topic in the corpus."
+    },
+    {
+      "id": "retr-06",
+      "question": "How were solar eclipses explained?",
+      "probe": "what an eclipse of the Sun was believed to be",
+      "lang": "en",
+      "path": "retrieval",
+      "expect": {"cultures": ["lokono", "mongolian"], "min_cultures": 2},
+      "why": "Three cultures cover it and each frames it differently - Lokono as a war between Hadali and Kathi, Indian through the Navagraha nodes. A retrieval that returns only one has not answered the question that was asked."
+    },
+    {
+      "id": "retr-07",
+      "question": "What meaning did shooting stars and meteors carry?",
+      "probe": "meaning of shooting stars and meteors",
+      "lang": "en",
+      "path": "retrieval",
+      "expect": {"cultures": ["mongolian"], "min_cultures": 1},
+      "why": "Mongolian has a section headed exactly this, so it is the easy half; Boorong buries the same idea in a table row ('Porkelong toute | Loss of tooth | Shooting star'), which BM25 over a markdown table is the harder half."
+    },
+    {
+      "id": "retr-08",
+      "question": "Какие созвездия происходят из охотничьих традиций?",
+      "probe": "созвездия охотничьих народов, лось",
+      "lang": "ru",
+      "path": "retrieval",
+      "expect": {"cultures": ["sami", "siberian"], "min_cultures": 1},
+      "why": "A Russian query about two northern cultures that both name an elk. Sami dates the figure to 'the old hunter culture before reindeer were domesticated'; Siberian uses Elk for Ursa Major. The connection is stated in prose and appears in no name."
+    },
+    {
+      "id": "retr-09",
+      "question": "¿Qué son las constelaciones oscuras y quién las reconoce?",
+      "probe": "constelaciones oscuras formadas por manchas del cielo",
+      "lang": "es",
+      "path": "retrieval",
+      "expect": {"cultures": ["northern_andes"], "min_cultures": 1},
+      "why": "A Spanish query about an Andean concept, which is a fair guess at a real user. Dark constellations are defined by the absence of stars, so nothing in constellation_lines represents them - this is the clearest case in the corpus of prose holding what the structured tables cannot."
+    },
+    {
+      "id": "retr-10",
+      "question": "哪些星座与舞蹈或仪式有关？",
+      "probe": "与舞蹈和仪式有关的星座",
+      "lang": "zh-Hans",
+      "path": "retrieval",
+      "expect": {"cultures": ["tukano"], "min_cultures": 1},
+      "why": "The deliberate hard case. Tukano's Kai Sariró is 'a circle of dances in some special Tukano ceremonies', stated only in prose. unicode61 does not segment Chinese, so BM25 over zh sections is weak by construction and this question has to be carried by the dense half. If it passes on BM25 alone, that assumption was wrong and worth knowing."
+    }
+  ]
+}
