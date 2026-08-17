@@ -21,3 +21,7 @@ data/corpus.db-shm
 .idea/
 .vscode/
 .DS_Store
+
+# Personal working notes, not part of the repository
+PLAN.md
+TECHDEBT.md
