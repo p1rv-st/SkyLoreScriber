@@ -17,3 +17,20 @@ embed = [
     "tokenizers>=0.15",
     "numpy>=1.26",
 ]
+
+# The agent is the one part that cannot run offline, so it is an extra for the same
+# reason the embedder is: `python -m skylore.tools`, the gold set and every test still
+# work with nothing installed. `-slim[openai]` rather than the full `pydantic-ai`, which
+# pulls every provider's SDK; OpenAI's client also reaches OpenRouter, which speaks the
+# same protocol.
+agent = [
+    # Not a floor picked for safety: `AgentRunResult.usage` is a property here and was a
+    # method in earlier versions, and `Tool(description=...)` overriding the docstring is
+    # what lets `tools.SCHEMAS` stay the single source of the text the model reads.
+    "pydantic-ai-slim[openai]>=2.31",
+    # For `skylore.web`, the optional Tavily search. Declared rather than borrowed from
+    # pydantic-ai's own tree, and used instead of `tavily-python` because the whole
+    # client is one POST -- and owning the request is what lets the result carry
+    # `external: true` as a guarantee rather than a hope.
+    "httpx>=0.27",
+]
