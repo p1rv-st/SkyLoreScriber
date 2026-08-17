@@ -5,7 +5,7 @@ Writes two files next to the project root:
   licenses.json   full parse: every license clause of every sky culture, normalised
   allowlist.json  the subset safe to derive new text from, plus the rejects and why
 
-Run:  python tools/scan_licenses.py
+Run:  python -m scripts.scan_licenses
 """
 
 from __future__ import annotations
@@ -16,7 +16,13 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CULTURES_DIR = ROOT / "stellarium-skycultures"
+sys.path.insert(0, str(ROOT))
+
+# The module rather than its names: this file already has a `LICENSES` of its own -- the
+# licence *terms* -- and importing the path under that name would shadow it silently.
+from skylore import paths  # noqa: E402
+
+CULTURES_DIR = paths.CORPUS_DIR
 
 # Terms of each licence that appears in the corpus. `derivatives` and `commercial`
 # are what actually gate a text-generating tool; the rest is for attribution UX.
@@ -239,7 +245,9 @@ def build_allowlist(cultures: list[dict]) -> dict:
             "carries its own terms: serve an illustration only where images.usable is "
             "true, and never serve a file listed in images.excluded."
         ),
-        "generated_from": "stellarium-skycultures/*/description.md",
+        # Derived from the real location rather than written out, so a moved corpus
+        # cannot leave a false provenance trail in a generated licence record.
+        "generated_from": f"{CULTURES_DIR.relative_to(paths.ROOT)}/*/description.md",
         "allowed": allowed,
         "allowed_commercial": [e["id"] for e in allowed if e["commercial"]],
         "allowed_images": [e["id"] for e in allowed if e["images"]["usable"]],
@@ -258,11 +266,12 @@ def main() -> int:
         key=lambda c: c["id"],
     )
 
-    licenses_path = ROOT / "licenses.json"
-    allowlist_path = ROOT / "allowlist.json"
+    licenses_path = paths.LICENSES
+    allowlist_path = paths.ALLOWLIST
+    corpus_path = CULTURES_DIR.relative_to(paths.ROOT)
     payload = {
-        "source": "stellarium-skycultures",
-        "repository_license": "AGPL-3.0 (see stellarium-skycultures/LICENSE-AGPL-3.0.txt)",
+        "source": paths.CORPUS_NAME,
+        "repository_license": f"AGPL-3.0 (see {corpus_path}/LICENSE-AGPL-3.0.txt)",
         "note": (
             "The repository-level AGPL does not override the per-culture licence declared "
             "in each description.md; the per-culture terms below govern the content."

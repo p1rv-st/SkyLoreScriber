@@ -12,11 +12,10 @@ from __future__ import annotations
 
 import sqlite3
 import unittest
-from pathlib import Path
 
-from skylore import retrieval, tools
+from skylore import paths, retrieval, tools
 
-DATABASE = Path(__file__).resolve().parent.parent / "corpus.db"
+DATABASE = paths.DATABASE
 
 try:
     from skylore import embed

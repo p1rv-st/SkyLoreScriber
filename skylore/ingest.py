@@ -26,12 +26,7 @@ from pathlib import Path
 
 from . import corpus, po
 from .lang import LANGUAGES, SOURCE_LANG, TRANSLATION_LANGS  # noqa: F401  (re-exported)
-
-ROOT = Path(__file__).resolve().parent.parent
-CORPUS_DIR = ROOT / "stellarium-skycultures"
-ALLOWLIST = ROOT / "allowlist.json"
-SCHEMA = Path(__file__).resolve().parent / "schema.sql"
-DATABASE = ROOT / "corpus.db"
+from .paths import ALLOWLIST, CORPUS_DIR, DATABASE, SCHEMA
 
 SCHEMA_VERSION = 3  # 2: names_fts folds diacritics; 3: embeddings keyed by (section, model)
 
@@ -315,7 +310,8 @@ def main() -> int:
         print(f"missing corpus: {CORPUS_DIR}", file=sys.stderr)
         return 1
     if not ALLOWLIST.exists():
-        print("missing allowlist.json -- run tools/scan_licenses.py first", file=sys.stderr)
+        print(f"missing {ALLOWLIST} -- run python -m scripts.scan_licenses first",
+              file=sys.stderr)
         return 1
 
     allowlist = json.loads(ALLOWLIST.read_text(encoding="utf-8"))

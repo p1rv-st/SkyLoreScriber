@@ -1,6 +1,6 @@
 {
   "source": "stellarium-skycultures",
-  "repository_license": "AGPL-3.0 (see stellarium-skycultures/LICENSE-AGPL-3.0.txt)",
+  "repository_license": "AGPL-3.0 (see data/data_to_ingest/stellarium-skycultures/LICENSE-AGPL-3.0.txt)",
   "note": "The repository-level AGPL does not override the per-culture licence declared in each description.md; the per-culture terms below govern the content.",
   "license_terms": {
     "CC-BY-SA": {

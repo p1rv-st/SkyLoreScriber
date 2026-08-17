@@ -13,11 +13,10 @@ from __future__ import annotations
 
 import sqlite3
 import unittest
-from pathlib import Path
 
-from skylore import lang, names
+from skylore import lang, names, paths
 
-DATABASE = Path(__file__).resolve().parent.parent / "corpus.db"
+DATABASE = paths.DATABASE
 
 
 @unittest.skipUnless(DATABASE.exists(), "corpus.db not built")

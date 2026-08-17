@@ -33,12 +33,9 @@ import sqlite3
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
 
 from . import lang, retrieval
-
-ROOT = Path(__file__).resolve().parent.parent
-DATABASE = ROOT / "corpus.db"
+from .paths import DATABASE
 
 
 @dataclass(frozen=True)

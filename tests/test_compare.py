@@ -11,11 +11,10 @@ from __future__ import annotations
 
 import json
 import unittest
-from pathlib import Path
 
-from skylore import compare, tools
+from skylore import compare, paths, tools
 
-DATABASE = Path(__file__).resolve().parent.parent / "corpus.db"
+DATABASE = paths.DATABASE
 
 ORION = "CON western Ori"
 PLEIADES = [17702, 17499, 17573, 17579, 17847, 17851, 18246]

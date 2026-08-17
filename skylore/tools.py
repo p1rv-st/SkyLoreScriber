@@ -32,8 +32,7 @@ from pathlib import Path
 from typing import Any
 
 from . import compare, cultures, lang, names, retrieval
-
-DATABASE = Path(__file__).resolve().parent.parent / "corpus.db"
+from .paths import DATABASE
 
 
 def connect(path: Path | str = DATABASE) -> sqlite3.Connection:

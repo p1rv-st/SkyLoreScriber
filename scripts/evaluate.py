@@ -1,8 +1,8 @@
 """Validate and score the gold evaluation set.
 
-    python -m tools.evaluate --validate    # every expectation exists in the corpus
-    python -m tools.evaluate               # run the runnable paths and score them
-    python -m tools.evaluate --verbose     # show each question
+    python -m scripts.evaluate --validate    # every expectation exists in the corpus
+    python -m scripts.evaluate               # run the runnable paths and score them
+    python -m scripts.evaluate --verbose     # show each question
 
 Two commands because they answer different questions, and the first has to pass before
 the second means anything. `--validate` checks the *set* against the corpus: a gold
@@ -33,8 +33,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from skylore import tools  # noqa: E402
-
-GOLD = ROOT / "eval" / "gold.json"
+from skylore.paths import GOLD  # noqa: E402
 
 # `retrieval` is runnable on BM25 alone; the dense half only changes how well it scores,
 # not whether it runs. Kept listed so a score always says which halves were in play.

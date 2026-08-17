@@ -1,5 +1,5 @@
 [submodule "stellarium-skycultures"]
-	path = stellarium-skycultures
+	path = data/data_to_ingest/stellarium-skycultures
 	url = https://github.com/Stellarium/stellarium-skycultures.git
 	# We pin a corpus commit and never author changes here, so untracked files
 	# in the checkout (editor dirs, scratch) are not this repo's business.

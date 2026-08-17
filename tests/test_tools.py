@@ -16,11 +16,10 @@ from __future__ import annotations
 import json
 import sqlite3
 import unittest
-from pathlib import Path
 
-from skylore import tools
+from skylore import paths, tools
 
-DATABASE = Path(__file__).resolve().parent.parent / "corpus.db"
+DATABASE = paths.DATABASE
 
 
 @unittest.skipUnless(DATABASE.exists(), "corpus.db not built")

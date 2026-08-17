@@ -10,9 +10,12 @@ wheels/
 .venv
 
 # Built by skylore.ingest from the corpus; reproducible, so not tracked
-corpus.db
-corpus.db-wal
-corpus.db-shm
+data/corpus.db
+data/corpus.db-wal
+data/corpus.db-shm
+
+# API keys for skylore.agent
+.env
 
 # Editors and OS
 .idea/

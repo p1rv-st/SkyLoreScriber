@@ -1,6 +1,6 @@
 {
   "policy": "Cultures whose text/data licence permits derivative works. share_alike=true means output derived from that culture must carry the same licence; commercial=false means non-commercial use only. Special permissions granted to Stellarium in the source do not extend to this project. Artwork is licensed separately from prose in most cultures, so `images` carries its own terms: serve an illustration only where images.usable is true, and never serve a file listed in images.excluded.",
-  "generated_from": "stellarium-skycultures/*/description.md",
+  "generated_from": "data/data_to_ingest/stellarium-skycultures/*/description.md",
   "allowed": [
     {
       "id": "anutan",
