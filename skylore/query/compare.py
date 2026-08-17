@@ -34,7 +34,8 @@ from __future__ import annotations
 import sqlite3
 from dataclasses import dataclass, field
 
-from . import lang, names
+from .. import lang
+from . import names
 
 # Below this many shared stars the result is noise: Orion crosses dozens of figures at
 # a single star. Deliberately a flat number for now rather than a function of the target

@@ -14,7 +14,8 @@ from __future__ import annotations
 import sqlite3
 import unittest
 
-from skylore import lang, names, paths
+from skylore import lang, paths
+from skylore.query import names
 
 DATABASE = paths.DATABASE
 

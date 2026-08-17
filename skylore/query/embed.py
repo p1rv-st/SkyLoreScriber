@@ -1,8 +1,8 @@
 """The dense half of retrieval: text to vectors, via ONNX Runtime.
 
-    python -m skylore.embed --list
-    python -m skylore.embed --model e5-small          # build vectors into corpus.db
-    python -m skylore.embed --model e5-small --langs en
+    python -m skylore.query.embed --list
+    python -m skylore.query.embed --model e5-small          # build vectors into corpus.db
+    python -m skylore.query.embed --model e5-small --langs en
 
 Optional. Nothing else in the package imports this module, and `search_lore` runs
 without it, so the whole project stays installable with no dependencies at all
@@ -34,8 +34,9 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
-from . import lang, retrieval
-from .paths import DATABASE
+from .. import lang
+from ..paths import DATABASE
+from . import retrieval
 
 
 @dataclass(frozen=True)

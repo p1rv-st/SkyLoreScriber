@@ -24,9 +24,9 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from ..lang import LANGUAGES, SOURCE_LANG, TRANSLATION_LANGS  # noqa: F401  (re-exported)
+from ..paths import ALLOWLIST, CORPUS_DIR, DATABASE, SCHEMA
 from . import corpus, po
-from .lang import LANGUAGES, SOURCE_LANG, TRANSLATION_LANGS  # noqa: F401  (re-exported)
-from .paths import ALLOWLIST, CORPUS_DIR, DATABASE, SCHEMA
 
 SCHEMA_VERSION = 3  # 2: names_fts folds diacritics; 3: embeddings keyed by (section, model)
 
@@ -375,6 +375,3 @@ def main() -> int:
         print(f"  warning: {warning}", file=sys.stderr)
     return 0
 
-
-if __name__ == "__main__":
-    raise SystemExit(main())

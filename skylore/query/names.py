@@ -33,7 +33,8 @@ import sqlite3
 import unicodedata
 from dataclasses import dataclass, field
 
-from . import cultures, lang
+from .. import lang
+from . import cultures
 
 # Below this, a query forms no trigram and `names_fts` returns nothing.
 MIN_TRIGRAM = 3

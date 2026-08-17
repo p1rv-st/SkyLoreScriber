@@ -33,7 +33,8 @@ import re
 import sqlite3
 from dataclasses import dataclass, field
 
-from . import corpus, lang
+from .. import lang
+from ..ingest import corpus
 
 # `![alt](path)` in either of the two forms the corpus uses, with or without alt text.
 _IMAGE = re.compile(r"!\[([^\]]*)\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")

@@ -13,12 +13,13 @@ from __future__ import annotations
 import sqlite3
 import unittest
 
-from skylore import paths, retrieval, tools
+from skylore import paths, tools
+from skylore.query import retrieval
 
 DATABASE = paths.DATABASE
 
 try:
-    from skylore import embed
+    from skylore.query import embed
     HAVE_EMBED = True
 except ImportError:  # pragma: no cover - depends on the optional extra
     HAVE_EMBED = False
@@ -28,7 +29,7 @@ def built_models(connection: sqlite3.Connection) -> list[str]:
     return [row[0] for row in connection.execute("SELECT model FROM embedding_models")]
 
 
-@unittest.skipUnless(HAVE_EMBED, "skylore.embed unavailable")
+@unittest.skipUnless(HAVE_EMBED, "skylore.query.embed unavailable")
 class Registry(unittest.TestCase):
     """Model conventions are data, not code: a vector built under one and queried under
     another is indistinguishable from a bad model."""
@@ -56,7 +57,7 @@ class Registry(unittest.TestCase):
                 self.assertNotEqual(spec.query_prefix, spec.text_prefix, spec.name)
 
 
-@unittest.skipUnless(HAVE_EMBED, "skylore.embed unavailable")
+@unittest.skipUnless(HAVE_EMBED, "skylore.query.embed unavailable")
 class EmbeddedText(unittest.TestCase):
 
     def test_the_heading_path_is_prefixed(self):

@@ -31,8 +31,9 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-from . import compare, cultures, lang, names, retrieval
+from . import lang
 from .paths import DATABASE
+from .query import compare, cultures, names, retrieval
 
 
 def connect(path: Path | str = DATABASE) -> sqlite3.Connection:
@@ -413,7 +414,10 @@ SCHEMAS = [
         "input_schema": {
             "type": "object",
             "properties": {
-                "query": {"type": "string"},
+                "query": {"type": "string", "description":
+                          "Whatever key the user has: 'Aldebaran', 'HIP 21421', "
+                          "'21421', 'alf Tau', a native name, or a meaning. Pass it as "
+                          "the user wrote it -- every form is looked up."},
                 "limit": {"type": "integer", "description": "Default 10."},
                 "lang": _LANG,
             },
@@ -433,7 +437,10 @@ SCHEMAS = [
         "input_schema": {
             "type": "object",
             "properties": {
-                "query": {"type": "string"},
+                "query": {"type": "string", "description":
+                          "The constellation name, in the user's own language and "
+                          "script -- Chinese, Russian and Spanish names are held "
+                          "directly, so do not translate it first."},
                 "culture": {"type": "string", "description":
                             "Optional culture id to search within."},
                 "limit": {"type": "integer", "description": "Default 10."},

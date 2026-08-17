@@ -20,8 +20,9 @@ corpus is Stellarium's today, and the licence scan records provenance by path
 name has to stay in it.
 
 `SCHEMA` is the one path that is *not* data. It ships inside the package because it is
-code -- the shape the database is built to -- and it moves with the module that applies
-it, not with the database it produced.
+code -- the shape the database is built to -- and it sits in `skylore/ingest/` beside
+`build.py`, the only module that applies it, rather than travelling with the database it
+produced.
 """
 
 from __future__ import annotations
@@ -42,7 +43,7 @@ LICENSES = DATA / "licenses.json"
 EVAL = DATA / "eval"
 GOLD = EVAL / "gold.json"
 
-SCHEMA = PACKAGE / "schema.sql"
+SCHEMA = PACKAGE / "ingest" / "schema.sql"
 
 # The path the licence scan records inside `licenses.json`, and the one the AGPL notice
 # refers to. Relative to the repository root and written out rather than derived, because

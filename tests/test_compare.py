@@ -12,7 +12,8 @@ from __future__ import annotations
 import json
 import unittest
 
-from skylore import compare, paths, tools
+from skylore import paths, tools
+from skylore.query import compare
 
 DATABASE = paths.DATABASE
 

@@ -14,7 +14,8 @@ from __future__ import annotations
 import sqlite3
 import unittest
 
-from skylore import cultures, lang, paths
+from skylore import lang, paths
+from skylore.query import cultures
 
 DATABASE = paths.DATABASE
 
@@ -265,7 +266,7 @@ class Citations(WithCorpus):
                 self.assertEqual(section.references, {})
 
     def test_no_marker_is_left_unresolved_where_a_source_exists(self):
-        from skylore import corpus
+        from skylore.ingest import corpus
         for card in cultures.find_cultures(self.db):
             article = cultures.get_culture_article(self.db, card.id)
             known = {row[0] for row in self.db.execute(

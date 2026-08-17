@@ -95,7 +95,7 @@ def validate(connection: sqlite3.Connection, gold: dict) -> list[str]:
         # retrieval. Catching that here is the difference between a set that grows and
         # one that grows honestly.
         if question["path"] == "retrieval" and question["probe"].strip():
-            from skylore import names as name_lookup
+            from skylore.query import names as name_lookup
             hits = name_lookup.search(connection, question["probe"], limit=1)
             if hits:
                 problems.append(
@@ -247,11 +247,11 @@ def main(argv: list[str] | None = None) -> int:
 
     embedder = None
     if args.embed:
-        from skylore import embed as embedding, retrieval
+        from skylore.query import embed as embedding, retrieval
         embedder = embedding.OnnxEmbedder(embedding.MODELS[args.embed])
         built = retrieval.embedded_langs(connection, args.embed)
         if not built:
-            print(f"no vectors for {args.embed}; run python -m skylore.embed --model "
+            print(f"no vectors for {args.embed}; run python -m skylore.query.embed --model "
                   f"{args.embed} --langs en")
             return 1
         print(f"dense half: {args.embed} over {built}")

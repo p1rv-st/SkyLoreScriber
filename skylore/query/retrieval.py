@@ -36,7 +36,9 @@ import struct
 from dataclasses import dataclass, field
 from typing import Protocol
 
-from . import corpus, cultures, lang
+from .. import lang
+from ..ingest import corpus
+from . import cultures
 
 # Rank-fusion constant, from the original RRF paper. Measured against the gold set at
 # 10 and at 60: identical scores. It is not the parameter that matters here, so it keeps
