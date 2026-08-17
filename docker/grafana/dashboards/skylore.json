@@ -1,0 +1,548 @@
+{
+  "uid": "skylore",
+  "title": "SkyLoreScriber",
+  "description": "What the agent did, what it cost, and what anyone thought of it. Panels read runs and verdicts directly; the $source variable separates live chat from seeded rows and from evaluation sweeps.",
+  "tags": [
+    "skylore"
+  ],
+  "timezone": "browser",
+  "editable": true,
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "source",
+        "label": "Traffic",
+        "type": "custom",
+        "query": "chat,synthetic,eval",
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "selected": true,
+          "text": [
+            "chat",
+            "synthetic"
+          ],
+          "value": [
+            "chat",
+            "synthetic"
+          ]
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "chat",
+            "value": "chat"
+          },
+          {
+            "selected": true,
+            "text": "synthetic",
+            "value": "synthetic"
+          },
+          {
+            "selected": false,
+            "text": "eval",
+            "value": "eval"
+          }
+        ],
+        "description": "Live questions, seeded rows, or gold-set sweeps. The evaluation panels at the bottom always read 'eval' and ignore this."
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "row",
+      "id": 1,
+      "title": "Live traffic",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "stat",
+      "id": 2,
+      "title": "Runs",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT count(*) AS runs\nFROM runs\nWHERE source IN ($source) AND $__timeFilter(ts)"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "id": 3,
+      "title": "Cost",
+      "description": "Summed over the selected range. NULL where genai-prices did not know the model -- an unpriced run is not a free one, so it is left out rather than counted as zero.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 4
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT sum(cost) AS cost\nFROM runs\nWHERE source IN ($source) AND $__timeFilter(ts)"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "id": 4,
+      "title": "Latency p95",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 1
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT percentile_cont(0.95) WITHIN GROUP (ORDER BY seconds) AS p95\nFROM runs\nWHERE source IN ($source) AND $__timeFilter(ts)"
+        }
+      ]
+    },
+    {
+      "type": "piechart",
+      "id": 5,
+      "title": "User feedback",
+      "description": "The only signal here that knows what the person actually wanted. Everything else on this dashboard is derivable without them.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT count(*) FILTER (WHERE v.score > 0) AS \"thumbs up\",\n       count(*) FILTER (WHERE v.score < 0) AS \"thumbs down\"\nFROM verdicts v JOIN runs r ON r.id = v.run_id\nWHERE v.source = 'user' AND r.source IN ($source) AND $__timeFilter(v.ts)"
+        }
+      ]
+    },
+    {
+      "type": "bargauge",
+      "id": 6,
+      "title": "Trajectory checks, pass rate",
+      "description": "Read off the tool calls on every run, with no model asked and nothing spent. language_carried: did the model pass the user's language to every corpus tool. used_the_corpus: did it ask the corpus at all before answering.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 90
+              },
+              {
+                "color": "green",
+                "value": 99
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT v.evaluator,\n       round(100.0 * count(*) FILTER (WHERE v.passed) / nullif(count(*), 0), 1) AS pass_rate\nFROM verdicts v JOIN runs r ON r.id = v.run_id\nWHERE v.source = 'trajectory' AND r.source IN ($source) AND $__timeFilter(v.ts)\nGROUP BY 1\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "id": 7,
+      "title": "Runs",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 5
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 60
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT $__timeGroup(ts, $__interval) AS time,\n       source AS metric,\n       count(*) AS runs\nFROM runs\nWHERE source IN ($source) AND $__timeFilter(ts)\nGROUP BY 1, 2\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "id": 8,
+      "title": "Latency",
+      "description": "Wall time around the whole agent run -- every model request and every tool call -- because that is what the person waiting experiences.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 5
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT $__timeGroup(ts, $__interval) AS time,\n       percentile_cont(0.5) WITHIN GROUP (ORDER BY seconds) AS p50,\n       percentile_cont(0.95) WITHIN GROUP (ORDER BY seconds) AS p95\nFROM runs\nWHERE source IN ($source) AND $__timeFilter(ts)\nGROUP BY 1\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "id": 9,
+      "title": "Cost",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 5
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 4,
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 60
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT $__timeGroup(ts, $__interval) AS time,\n       sum(cost) AS cost\nFROM runs\nWHERE source IN ($source) AND cost IS NOT NULL AND $__timeFilter(ts)\nGROUP BY 1\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "id": 10,
+      "title": "Tokens",
+      "description": "Input dominates by an order of magnitude: the corpus payloads are what the model reads, and one whole article is 25k tokens on its own.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT $__timeGroup(ts, $__interval) AS time,\n       sum(input_tokens)  AS input,\n       sum(output_tokens) AS output\nFROM runs\nWHERE source IN ($source) AND $__timeFilter(ts)\nGROUP BY 1\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "type": "barchart",
+      "id": 11,
+      "title": "Tools called",
+      "description": "Which of the six the agent actually reaches for. A question the reference monitoring stack cannot ask, because it records model calls rather than runs.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 12
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xTickLabelRotation": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT tool, count(*) AS calls\nFROM runs r, unnest(r.tools) AS tool\nWHERE r.source IN ($source) AND $__timeFilter(r.ts)\nGROUP BY 1\nORDER BY 2 DESC"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "id": 12,
+      "title": "Recent runs",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT ts AS time, lang, question,\n       array_to_string(tools, ', ') AS tools,\n       internet AS web,\n       round(seconds::numeric, 1) AS seconds,\n       round(cost::numeric, 4) AS cost\nFROM runs\nWHERE source IN ($source) AND $__timeFilter(ts)\nORDER BY ts DESC\nLIMIT 20"
+        }
+      ],
+      "description": "`web` says the web-search tool was offered for that question, not that it was used -- `tools` says that. An answer where the web was available and the model stayed in the corpus is the interesting one."
+    },
+    {
+      "type": "row",
+      "id": 13,
+      "title": "Evaluation — the gold set, judged by a model",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "bargauge",
+      "id": 14,
+      "title": "Judge, pass rate by rubric",
+      "description": "From `python -m scripts.evaluate_agent --record`. grounding: did the answer contain what that gold question requires. prose_contract: did it credit its cultures, keep native names as names, and declare a fallback as a fallback. Ignores the $source variable -- these only exist for eval runs.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 20
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "green",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT v.evaluator,\n       round(100.0 * count(*) FILTER (WHERE v.passed) / nullif(count(*), 0), 1) AS pass_rate\nFROM verdicts v\nWHERE v.source = 'judge' AND $__timeFilter(v.ts)\nGROUP BY 1\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "id": 15,
+      "title": "What the judge failed, and why",
+      "description": "The reason column is the whole value of an LLM judge over a pass rate: a percentage says something is wrong, this says what.",
+      "datasource": {
+        "type": "postgres",
+        "uid": "skylore-postgres"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 16,
+        "x": 8,
+        "y": 20
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawQuery": true,
+          "editorMode": "code",
+          "rawSql": "SELECT v.ts AS time, r.case_id, r.lang, v.evaluator, v.reason, v.model\nFROM verdicts v JOIN runs r ON r.id = v.run_id\nWHERE v.source = 'judge' AND v.passed IS FALSE AND $__timeFilter(v.ts)\nORDER BY v.ts DESC\nLIMIT 20"
+        }
+      ]
+    }
+  ]
+}

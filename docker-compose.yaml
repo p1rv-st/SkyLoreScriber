@@ -1,0 +1,90 @@
+# The monitoring stack: the chat, the store it writes to, and the dashboards over it.
+#
+#   docker compose up --build
+#
+#   http://localhost:8501   ask a question
+#   http://localhost:3000   watch it arrive (admin / admin)
+#
+# Prerequisites are the two the app cannot supply itself: `data/corpus.db`, built on the
+# host with `python -m skylore.ingest`, and an `OPENAI_API_KEY` in `.env`. Compose reads
+# `.env` from this directory on its own, so the same file that configures the CLI
+# configures the stack.
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-skylore}
+      POSTGRES_USER: ${POSTGRES_USER:-skylore}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-skylore}
+    ports:
+      # Published so `python -m skylore.monitor stats` and `scripts.evaluate_agent
+      # --record` can reach it from the host with POSTGRES_HOST=localhost. The host side
+      # of all three mappings is settable, because a development machine usually has
+      # more than one stack on it and 8501 and 5432 are the two ports everyone takes.
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      # Without this the app wins the race on a cold start, fails to connect and exits,
+      # and `docker compose up` looks broken on the one run that matters -- the first.
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-skylore} -d ${POSTGRES_DB:-skylore}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: ${POSTGRES_DB:-skylore}
+      POSTGRES_USER: ${POSTGRES_USER:-skylore}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-skylore}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      # Without this the chat's web-search toggle is offered and then fails on the first
+      # question; the app disables the switch when the key is absent, and it can only
+      # know that if the variable reaches it.
+      TAVILY_API_KEY: ${TAVILY_API_KEY:-}
+      SKYLORE_PROVIDER: ${SKYLORE_PROVIDER:-openai}
+      SKYLORE_MODEL: ${SKYLORE_MODEL:-}
+      SKYLORE_LANG: ${SKYLORE_LANG:-en}
+    ports:
+      - "${APP_PORT:-8501}:8501"
+    volumes:
+      # Read-only, and that is the corpus' own contract: `tools.connect` opens it
+      # `mode=ro` because nothing in the query layer writes.
+      - ./data:/app/data:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  grafana:
+    image: grafana/grafana:11.6.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      # Nothing here is worth a signup prompt on a local stack.
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_USERS_DEFAULT_THEME: dark
+      POSTGRES_DB: ${POSTGRES_DB:-skylore}
+      POSTGRES_USER: ${POSTGRES_USER:-skylore}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-skylore}
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    volumes:
+      # The datasource and the dashboard come from files in the repository rather than
+      # from clicks in the UI. A dashboard that exists only inside a volume is a
+      # dashboard that is lost with the volume, cannot be reviewed in a diff, and has to
+      # be rebuilt by hand on every other machine.
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  grafana_data:

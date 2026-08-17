@@ -1,0 +1,16 @@
+# Where Grafana finds the dashboard JSON. `foldersFromFilesStructure` is off: there is
+# one dashboard, and a folder for it would be a click to get past on every visit.
+apiVersion: 1
+
+providers:
+  - name: skylore
+    type: file
+    disableDeletion: false
+    # The dashboard is a file in the repository, so edits made in the UI are not the
+    # source of truth. `allowUiUpdates: false` says so out loud: a panel changed in the
+    # browser is reverted on the next restart, which is the honest behaviour when the
+    # file is what ships.
+    allowUiUpdates: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

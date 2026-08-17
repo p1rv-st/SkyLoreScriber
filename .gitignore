@@ -6,6 +6,16 @@ dist/
 wheels/
 *.egg-info
 
+# Tool caches and coverage output
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
 # Virtual environments
 .venv
 
@@ -14,14 +24,24 @@ data/corpus.db
 data/corpus.db-wal
 data/corpus.db-shm
 
-# API keys for skylore.agent
+# API keys for skylore.agent. `.env.*` covers the variants an editor or a second stack
+# tends to leave behind (.env.local, .env.backup); the example is the one file here that
+# holds no key and is the only one meant to be read by anybody else.
 .env
+.env.*
+!.env.example
+
+# Personal working notes, kept local. They were tracked once and remain in that history;
+# what a reader needs is in the code, starting from the map in skylore/__init__.py.
+PLAN.md
+TECHDEBT.md
+
+# The reference implementation this project was written against, plus the CSVs and
+# notebook outputs its runs left behind. Kept local for the same reason as the notes
+# above: it is somebody else's code, read once and not maintained here.
+example/
 
 # Editors and OS
 .idea/
 .vscode/
 .DS_Store
-
-# Personal working notes, not part of the repository
-PLAN.md
-TECHDEBT.md

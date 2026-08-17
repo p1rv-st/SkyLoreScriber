@@ -45,6 +45,12 @@ GOLD = EVAL / "gold.json"
 
 SCHEMA = PACKAGE / "ingest" / "schema.sql"
 
+# The monitoring schema, in Postgres rather than sqlite and applied to a server rather
+# than a file -- which is why it is a second constant and not a variant of the first.
+# Same argument for shipping it inside the package: it is the shape `store.py` writes to,
+# so it travels with `store.py`.
+MONITOR_SCHEMA = PACKAGE / "monitor" / "schema.sql"
+
 # The path the licence scan records inside `licenses.json`, and the one the AGPL notice
 # refers to. Relative to the repository root and written out rather than derived, because
 # it appears in generated files that outlive any particular checkout.

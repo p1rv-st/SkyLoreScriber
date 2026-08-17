@@ -1,4 +1,9 @@
-"""The agent-facing boundary: four tools, their schemas, and JSON serialisation.
+"""The agent-facing boundary: the six tools, their schemas, and JSON serialisation.
+
+`show_constellation_image` sits here too, in `IMAGE_TOOLS` rather than `TOOLS`: it
+serves a licensed asset, so its two licence rules belong beside the others, but it
+illustrates an answer instead of being one and is offered only to a caller that can
+display a picture.
 
 Everything below this module returns frozen dataclasses. Everything above it speaks
 JSON. That translation is not mechanical, and `dataclasses.asdict` would be the wrong
@@ -32,6 +37,7 @@ from pathlib import Path
 from typing import Any
 
 from . import lang
+from . import paths
 from .paths import DATABASE
 from .query import compare, cultures, names, retrieval
 
@@ -322,6 +328,97 @@ def compare_across_cultures(connection: sqlite3.Connection, *,
     return _with_sources(connection, payload)
 
 
+def _caption(connection: sqlite3.Connection, constellation_id: str,
+             locale: str) -> dict[str, Any]:
+    """Enough of a name to label a picture with: the native form and one meaning.
+
+    Not the full `_nameset` treatment, because this is a caption and not an answer --
+    `find_constellation` is where a model goes for every name a figure has. What is kept
+    is the rule that applies everywhere: the native name as it stands, and the gloss
+    resolved through `lang.pick` so it arrives in the language asked for or says which
+    language it actually came from.
+    """
+    rows = connection.execute(
+        "SELECT kind, lang, value FROM names WHERE constellation_id = ? ORDER BY rank",
+        (constellation_id,)).fetchall()
+    payload: dict[str, Any] = {}
+    for kind in ("native", "pronounce"):
+        value = next((v for k, _, v in rows if k == kind), None)
+        if value:
+            payload[kind] = value
+    glosses = {language: value for kind, language, value in rows
+               if kind == "gloss" and language}
+    meaning = _resolved(lang.pick(glosses, lang.name_order(locale), locale))
+    if meaning:
+        payload["meaning"] = meaning
+    return payload
+
+
+def show_constellation_image(connection: sqlite3.Connection, *, constellation: str,
+                             lang: str = "en") -> dict[str, Any]:
+    """The corpus' own illustration of one figure, for a caller that can display it.
+
+    Not one of the six, and deliberately outside `TOOLS`: the six answer questions, and
+    this one decorates an answer. It is registered only by a caller with somewhere to put
+    a picture -- the Streamlit chat -- exactly as `search_web` is registered only when
+    someone asks for it.
+
+    **Two independent licence rules apply, and both are enforced here rather than
+    downstream.** A culture may licence its prose and none of its artwork
+    (`images_usable = 0`: maori is such a culture, with four illustrations that may not
+    be served), and a specific file may be carved out by a manual review even where the
+    culture's artwork is otherwise fine (`excluded_assets`). This is the same pair of
+    rules `query.cultures.strip_unservable_images` applies to images embedded in article
+    prose; both are checked because they will not always catch the same files.
+
+    What comes back is a path, not bytes. The caller resolves it against
+    `paths.CORPUS_DIR`, which keeps this function a database read and leaves the
+    decision of how -- or whether -- to render an image with the layer that has a screen.
+    """
+    row = connection.execute(
+        "SELECT k.culture_id, k.image_path, k.image_w, k.image_h, c.images_usable "
+        "  FROM constellations k JOIN cultures c ON c.id = k.culture_id "
+        " WHERE k.id = ?", (constellation,)).fetchone()
+    if row is None:
+        return {"error": f"no such constellation: {constellation!r}",
+                "hint": "find_constellation returns the ids, e.g. 'CON aztec 001'"}
+
+    culture_id, image_path, width, height, images_usable = row
+    if not image_path:
+        # Not a licence refusal and not an error: most figures simply have no artwork.
+        # Said plainly so the model reports it rather than trying another spelling.
+        return {"constellation": constellation, "culture": culture_id,
+                "image": None,
+                "note": "this figure has no illustration in the corpus"}
+
+    if image_path in cultures.excluded_paths(connection, culture_id):
+        return {"omitted": {"constellation": constellation, "culture": culture_id,
+                            "reason": "excluded_assets"}}
+    if not images_usable:
+        return {"omitted": {"constellation": constellation, "culture": culture_id,
+                            "reason": "images_usable = 0",
+                            "note": "this culture licenses its text but not its artwork"}}
+
+    # The index and the repository disagree about two figures out of 301: upstream's
+    # `index.json` declares an illustration that the corpus does not actually ship. A
+    # path the caller cannot open is worse than no picture -- the model would report an
+    # illustration shown and the page would render a broken frame -- so a missing file
+    # is answered exactly as no file at all.
+    if not (paths.CORPUS_DIR / culture_id / image_path).exists():
+        return {"constellation": constellation, "culture": culture_id, "image": None,
+                "note": "the corpus index declares an illustration it does not ship"}
+
+    return _with_sources(connection, {
+        "constellation": constellation,
+        "culture": culture_id,
+        "name": _caption(connection, constellation, lang),
+        # Relative to the corpus directory, and the caller joins it. An absolute path
+        # here would be a path from this machine baked into a tool result.
+        "image": {"path": f"{culture_id}/{image_path}",
+                  "width": width, "height": height},
+    })
+
+
 TOOLS = {
     "find_cultures": find_cultures,
     "compare_across_cultures": compare_across_cultures,
@@ -331,13 +428,19 @@ TOOLS = {
     "search_lore": search_lore,
 }
 
+# Registered only by a caller that can show a picture, so it is not in `TOOLS` and not in
+# `SCHEMAS`. `python -m skylore.tools show_constellation_image '{...}'` still runs it,
+# because a tool that cannot be tried from a shell is a tool nobody checks.
+IMAGE_TOOLS = {"show_constellation_image": show_constellation_image}
+
 
 def call(connection: sqlite3.Connection, name: str, arguments: dict) -> dict[str, Any]:
     """Dispatch one tool call. Unknown names and bad arguments answer, never raise:
     a tool that throws teaches the model nothing about what to try instead."""
-    tool = TOOLS.get(name)
+    tool = (TOOLS | IMAGE_TOOLS).get(name)
     if tool is None:
-        return {"error": f"no such tool: {name!r}", "available": sorted(TOOLS)}
+        return {"error": f"no such tool: {name!r}",
+                "available": sorted(TOOLS | IMAGE_TOOLS)}
     try:
         return tool(connection, **arguments)
     except TypeError as error:
@@ -503,6 +606,46 @@ SCHEMAS = [
         },
     },
 ]
+
+# Kept out of `SCHEMAS` for the same reason `show_constellation_image` is kept out of
+# `TOOLS`: the model is shown it only by a caller that can display a picture.
+#
+# The restraint is written into the description rather than enforced by a counter,
+# because a tool that starts refusing after the second call teaches the model that
+# retrying works. The description is what it reads before deciding, and the shape of the
+# instruction -- when to use it, then how often -- matches the other six.
+IMAGE_SCHEMA = {
+    "name": "show_constellation_image",
+    "description": (
+        "Display the corpus' own illustration of one constellation to the user, by its id "
+        "from find_constellation or compare_across_cultures. Calling this puts the "
+        "picture on the screen beside your answer -- there is nothing to embed or "
+        "link, and you should never write out a file name instead. Use it when the "
+        "answer turns on what a figure looks like: the shape drawn through the "
+        "stars, or a figure two cultures see differently. "
+        "Pass the id exactly as a tool returned it -- ids are not built out of names, and a guessed one is an error and a wasted call. "
+        "At most two pictures may be shown in one answer, and further calls are "
+        "refused: choose the two that carry the most, and describe the rest in "
+        "words. A wall of pictures buries the text they were meant to illustrate, "
+        "and a picture of something mentioned in passing is noise. "
+        "Only about 300 of the 1529 figures have artwork at all, and only from the "
+        "cultures whose licence permits serving it. `image: null` means this figure "
+        "simply has none; an `omitted` block means the licence forbids it -- in both "
+        "cases say so briefly if it matters, do not describe the picture you did not "
+        "get, and do not ask again."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "constellation": {
+                "type": "string",
+                "description": "The constellation id, e.g. 'CON aztec 001'.",
+            },
+            "lang": _LANG,
+        },
+        "required": ["constellation"],
+    },
+}
 
 
 # ────────────────────────────────────── cli ──────────────────────────────────────

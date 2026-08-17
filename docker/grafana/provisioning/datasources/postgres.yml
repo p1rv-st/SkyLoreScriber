@@ -1,0 +1,21 @@
+# The datasource, from a file. The lesson this stack follows clicks it together in the
+# UI; provisioning means a fresh clone comes up connected, and that the connection can be
+# reviewed in a diff like anything else.
+apiVersion: 1
+
+datasources:
+  - name: SkyLore
+    uid: skylore-postgres
+    type: postgres
+    access: proxy
+    url: postgres:5432
+    database: ${POSTGRES_DB}
+    user: ${POSTGRES_USER}
+    isDefault: true
+    editable: false
+    secureJsonData:
+      password: ${POSTGRES_PASSWORD}
+    jsonData:
+      sslmode: disable
+      postgresVersion: 1700
+      timescaledb: false

@@ -189,10 +189,138 @@ class Licensing(Boundary):
                 self.assertNotIn(path, serialised, card["id"])
 
 
+class ConstellationImages(Boundary):
+    """`show_constellation_image` -- the one tool that hands out a licensed asset.
+
+    Every other tool serves text. This one points at a file, so the two licence rules
+    that govern artwork are swept here in full rather than sampled: a culture may licence
+    its prose and none of its pictures, and a single file may be carved out by review
+    even where the culture's artwork is fine.
+    """
+
+    def illustrated(self):
+        return self.db.execute(
+            "SELECT k.id, k.culture_id, c.images_usable FROM constellations k "
+            "  JOIN cultures c ON c.id = k.culture_id "
+            " WHERE k.image_path IS NOT NULL").fetchall()
+
+    def test_the_corpus_has_artwork_to_test_with(self):
+        rows = self.illustrated()
+        self.assertGreater(len(rows), 100)
+        self.assertTrue(any(usable for _, _, usable in rows))
+        self.assertTrue(any(not usable for _, _, usable in rows),
+                        "maori licenses text but not artwork; without such a culture "
+                        "the refusal below tests nothing")
+
+    def test_every_served_image_exists_on_disk(self):
+        """A path the caller cannot open is worse than no picture: the model reports a
+        picture shown and the page shows a broken frame."""
+        for constellation_id, _, usable in self.illustrated():
+            if not usable:
+                continue
+            payload = tools.show_constellation_image(
+                self.db, constellation=constellation_id)
+            with self.subTest(constellation=constellation_id):
+                self.assertIn("image", payload)
+                # `None` is the answer for the two figures upstream declares and does
+                # not ship; the test below covers those. What must never happen is a
+                # path that is handed out and cannot be opened.
+                if payload["image"] is not None:
+                    self.assertTrue(
+                        (paths.CORPUS_DIR / payload["image"]["path"]).exists())
+
+    def test_a_culture_that_licenses_no_artwork_is_refused(self):
+        for constellation_id, culture_id, usable in self.illustrated():
+            if usable:
+                continue
+            payload = tools.show_constellation_image(
+                self.db, constellation=constellation_id)
+            with self.subTest(constellation=constellation_id):
+                self.assertIn("omitted", payload)
+                self.assertNotIn("image", payload)
+                self.assertEqual(payload["omitted"]["reason"], "images_usable = 0")
+
+    def test_no_excluded_asset_is_ever_served(self):
+        excluded = [row[0] for row in self.db.execute(
+            "SELECT path FROM excluded_assets")]
+        self.assertTrue(excluded)
+        for constellation_id, _, _ in self.illustrated():
+            serialised = json.dumps(tools.show_constellation_image(
+                self.db, constellation=constellation_id), ensure_ascii=False)
+            for path in excluded:
+                self.assertNotIn(path, serialised, constellation_id)
+
+    def test_an_illustration_the_corpus_does_not_ship_is_not_offered(self):
+        """Upstream declares two files it does not include. Answered as "no picture"
+        rather than as a path that 404s in whatever is displaying it."""
+        declared_but_missing = [
+            (row[0], row[1], row[2]) for row in self.db.execute(
+                "SELECT k.id, k.culture_id, k.image_path FROM constellations k "
+                "  JOIN cultures c ON c.id = k.culture_id "
+                " WHERE k.image_path IS NOT NULL AND c.images_usable = 1")
+            if not (paths.CORPUS_DIR / row[1] / row[2]).exists()]
+        self.assertTrue(declared_but_missing, "the two known cases are still in the "
+                                              "corpus; if upstream fixed them, drop this")
+        for constellation_id, _, _ in declared_but_missing:
+            payload = tools.show_constellation_image(
+                self.db, constellation=constellation_id)
+            with self.subTest(constellation=constellation_id):
+                self.assertIsNone(payload["image"])
+                self.assertNotIn("error", payload)
+
+    def test_a_figure_without_artwork_says_so_rather_than_erroring(self):
+        """Most figures have none. An error would invite the model to try again."""
+        constellation_id = self.db.execute(
+            "SELECT id FROM constellations WHERE image_path IS NULL LIMIT 1").fetchone()[0]
+        payload = tools.show_constellation_image(self.db, constellation=constellation_id)
+        self.assertIsNone(payload["image"])
+        self.assertNotIn("error", payload)
+
+    def test_an_unknown_id_answers_with_a_hint(self):
+        payload = tools.show_constellation_image(self.db, constellation="CON nope 001")
+        self.assertIn("error", payload)
+        self.assertIn("find_constellation", payload["hint"])
+
+    def test_the_caption_carries_the_name_in_the_language_asked_for(self):
+        payload = tools.show_constellation_image(
+            self.db, constellation="CON aztec 001", lang="ru")
+        self.assertEqual(payload["name"]["meaning"]["lang"], "ru")
+        self.assertEqual(payload["name"]["pronounce"], "Mamalhuaztli")
+
+    def test_attribution_travels_with_the_picture(self):
+        payload = tools.show_constellation_image(
+            self.db, constellation="CON aztec 001")
+        self.assertTrue(payload["sources"]["aztec"]["attribution"].strip())
+        self.assertTrue(payload["sources"]["aztec"]["image_licenses"])
+
+    def test_the_tool_is_offered_separately_from_the_six(self):
+        """It decorates an answer rather than answering, and only a caller with a screen
+        should be shown it -- so it is in neither `TOOLS` nor `SCHEMAS`."""
+        self.assertNotIn("show_constellation_image", tools.TOOLS)
+        self.assertNotIn("show_constellation_image", {s["name"] for s in tools.SCHEMAS})
+        self.assertIn("show_constellation_image", tools.IMAGE_TOOLS)
+
+    def test_the_description_asks_for_restraint(self):
+        """The cap on how many pictures to show lives in the text the model reads, and
+        nothing else enforces it -- so it is asserted like any other behaviour."""
+        description = tools.IMAGE_SCHEMA["description"]
+        self.assertIn("At most two pictures", description)
+        self.assertIn("omitted", description)
+
+
 class Dispatch(Boundary):
 
     def test_every_schema_names_a_real_tool(self):
         self.assertEqual({s["name"] for s in tools.SCHEMAS}, set(tools.TOOLS))
+
+    def test_the_image_tool_can_still_be_run_from_a_shell(self):
+        """Not in `TOOLS`, but `call` finds it: a tool nobody can try from a terminal is
+        a tool nobody checks."""
+        payload = tools.call(self.db, "show_constellation_image",
+                             {"constellation": "CON aztec 001"})
+        self.assertIn("image", payload)
+        self.assertIn("show_constellation_image",
+                      tools.call(self.db, "nope", {})["available"])
 
     def test_schemas_are_well_formed(self):
         for schema in tools.SCHEMAS:
@@ -229,7 +357,8 @@ class Dispatch(Boundary):
     def test_an_unknown_tool_answers_rather_than_raising(self):
         result = tools.call(self.db, "nope", {})
         self.assertIn("error", result)
-        self.assertEqual(set(result["available"]), set(tools.TOOLS))
+        self.assertEqual(set(result["available"]),
+                         set(tools.TOOLS | tools.IMAGE_TOOLS))
 
     def test_bad_arguments_answer_rather_than_raising(self):
         result = tools.call(self.db, "lookup_star", {"bogus": 1})

@@ -34,3 +34,30 @@ agent = [
     # `external: true` as a guarantee rather than a hope.
     "httpx>=0.27",
 ]
+# `scripts.evaluate` -- the gold set against the six tools -- needs none of this and must
+# keep needing none of it: it is the number that runs in CI, on a fork, without a key.
+# This extra is for `scripts.evaluate_agent`, which judges the agent's prose with a
+# model, and so cannot run offline or for free.
+#
+# Pinned to the exact minor of `pydantic-ai-slim` above rather than floored, because
+# pydantic-evals depends on `pydantic-ai-slim==<its own version>` -- a `>=` here would
+# let a resolver upgrade the agent's runtime as a side effect of installing its
+# evaluation, which is the one dependency edge worth being strict about.
+eval = [
+    "pydantic-evals==2.31.*",
+]
+
+# `skylore.monitor`: what happened in production, written to Postgres and drawn by
+# Grafana. Postgres rather than the sqlite this project uses everywhere else for one
+# reason that is not about the data -- Grafana reads Postgres natively and sqlite only
+# through a third-party plugin.
+#
+# `psycopg[binary]` rather than plain `psycopg`: the pure-Python build needs libpq and a
+# compiler on the host, which is a poor first impression for a monitoring stack whose
+# whole promise is one command. Streamlit is here rather than in `agent` because the
+# agent is perfectly usable from a terminal and 40 MB of web framework should not be the
+# price of asking it a question.
+monitor = [
+    "psycopg[binary]>=3.2",
+    "streamlit>=1.40",
+]

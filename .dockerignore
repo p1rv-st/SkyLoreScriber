@@ -1,0 +1,16 @@
+# The build context is the repository root, and the repository root contains 168 MB of
+# corpus sources the image never needs. Without this file every `docker build` uploads
+# them to the daemon before deciding not to use them.
+data/
+.venv/
+.git/
+.idea/
+example/
+docker/
+tests/
+scripts/
+*.md
+.env
+__pycache__/
+*.py[oc]
+.DS_Store

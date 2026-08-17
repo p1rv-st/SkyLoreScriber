@@ -1,8 +1,13 @@
-"""The RAG loop: a PydanticAI agent over the six tools.
+"""The RAG loop: a PydanticAI agent over the six tools, and two optional ones.
 
 This is the first module in the project that cannot run offline, which is why
 `pydantic-ai-slim` lives in the `agent` extra. Everything below it still installs with
 no dependencies at all.
+
+The six are always registered. `search_web` is added when the deployment allows it and
+`show_constellation_image` when the caller has a screen to draw on; both are left out
+entirely rather than registered and refused, and each brings its own paragraph of
+instructions only when its tool is present.
 
 Three decisions are worth reading before changing anything here.
 
@@ -29,6 +34,7 @@ die there satisfy nothing.
 
 from __future__ import annotations
 
+import asyncio
 import dataclasses
 import json
 import os
@@ -41,17 +47,71 @@ from pydantic_ai.models import Model
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.providers.openrouter import OpenRouterProvider
+from pydantic_ai.usage import UsageLimits
 
-from .. import tools
+from .. import paths, tools
 from ..query import retrieval
 from . import web
 
 MODEL = "gpt-5.4-mini"
+LANG = "en"
+
+# Pictures one answer may display. Two, because a picture beside a paragraph illustrates
+# it and six bury it -- and because the schema's polite version of this rule was measured
+# and found to hold only until somebody asks for a gallery.
+IMAGE_LIMIT = 2
 
 # Chat Completions rather than the Responses API: OpenRouter speaks the former, and
 # nothing here needs the latter. One transport for both providers means the answer to
 # "does this work on OpenRouter" is not a separate code path that nobody exercises.
 PROVIDERS = ("openai", "openrouter")
+
+
+# ──────────────────────────────── what the deployment sets ────────────────────────────
+#
+# Three things belong to whoever runs this rather than to the code: which model answers,
+# which language it answers in, and -- with `SKYLORE_PROVIDER`, which was here first --
+# where the requests go. Each is resolved the same way, and in the same order: an
+# explicit argument wins, then the environment, then the constant above. Resolved on
+# call rather than read into a constant at import, because `.env` is loaded by the entry
+# point and a constant would be fixed before that ever happened.
+
+def load_env(path=None) -> None:
+    """Put `.env` into the environment, without overwriting anything already set.
+
+    Called by the entry points -- the CLI and the evaluation scripts -- and by nothing
+    below them. Importing a library should not read files off disk or decide which model
+    a caller meant; a program that embeds `skylore.agent` sets its own environment and
+    this stays out of its way. The caller's own exports win over the file for the same
+    reason.
+    """
+    path = path or paths.ROOT / ".env"
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
+
+
+def model_name(name: str | None = None) -> str:
+    """Which model answers. `SKYLORE_MODEL` overrides the default, `--model` overrides
+    both -- a number from an evaluation means nothing without the model that produced
+    it, so the model is a setting and not a constant to edit."""
+    return name or os.environ.get("SKYLORE_MODEL") or MODEL
+
+
+def language(lang: str | None = None) -> str:
+    """The language the answer and the names come back in. `SKYLORE_LANG` sets the
+    deployment's default; `--lang` sets it per question.
+
+    It is a default and not a policy: `lang` travels into the run as an instruction the
+    model has to carry into its own tool calls, which is what `lang-01`/`lang-02` and
+    `LanguageCarried` in the evaluation exist to check.
+    """
+    return lang or os.environ.get("SKYLORE_LANG") or LANG
 
 
 # ──────────────────────────────────── the loop ────────────────────────────────────
@@ -68,6 +128,11 @@ class Deps:
     connection: sqlite3.Connection
     lang: str = "en"
     embedder: retrieval.Embedder | None = None
+
+    # How many pictures have actually been displayed in this run. Mutable, and the only
+    # mutable thing here, because the limit below is per answer and there is nowhere else
+    # that knows what "this answer" means.
+    images_shown: int = 0
 
 
 INSTRUCTIONS = """
@@ -122,6 +187,24 @@ Web material is less reliable than the corpus and belongs to nobody here: cite t
 never credit a sky culture for something that came from the web, and where the two
 disagree say so plainly -- "the corpus has X, this source has Y" -- rather than quietly
 preferring one.
+""".strip()
+
+
+IMAGES = """
+You can put pictures on the screen. show_constellation_image displays the corpus' own
+illustration of one figure beside your answer, by the id find_constellation and
+compare_across_cultures return. Calling it *is* showing it: you do not embed, link or
+paste anything, and you never write out a file name -- if a picture belongs in the
+answer, call the tool.
+
+Keep it to one or two in an answer, for figures the answer is really about. A picture
+beside a paragraph helps; six pictures bury the paragraph. Only about 300 of the 1529
+figures have artwork, and some cultures license their text but not their pictures -- when
+one comes back without an image, say so in a few words and move on.
+
+Write the text so it stands on its own: name the culture and what it calls the figure in
+prose, and do not refer to a picture with "as you can see above". The picture illustrates
+the answer; it is not part of it.
 """.strip()
 
 
@@ -201,6 +284,33 @@ async def search_lore(ctx: RunContext[Deps], query: str, lang: str = "en",
                              embedder=ctx.deps.embedder)
 
 
+async def show_constellation_image(ctx: RunContext[Deps], constellation: str,
+                                   lang: str = "en") -> dict[str, Any]:
+    """Registered only when the caller has somewhere to put a picture, which today means
+    the Streamlit chat. The tool returns a path and the caller renders it: a model cannot
+    draw on a terminal, and a tool whose result nobody can display is a tool that spends
+    tokens describing files.
+
+    **The limit is enforced here, and it was written as a request first.** The schema
+    asks for one or two; measurement said that holds until the user asks for a gallery,
+    and then it does not -- "покажи, как они выглядят" about five figures produced six
+    calls, two of them with invented ids. So the cap is a refusal with a reason rather
+    than a sentence in a description. Only displayed pictures count: an error or a
+    licence refusal has shown the user nothing and must not consume the allowance.
+    """
+    if ctx.deps.images_shown >= IMAGE_LIMIT:
+        return {"refused": {
+            "reason": f"{IMAGE_LIMIT} pictures have already been shown in this answer, "
+                      f"which is the limit",
+            "hint": "describe the remaining figures in words; do not call this again"}}
+
+    result = tools.show_constellation_image(ctx.deps.connection,
+                                            constellation=constellation, lang=lang)
+    if result.get("image"):
+        ctx.deps.images_shown += 1
+    return result
+
+
 async def search_web(ctx: RunContext[Deps], query: str,
                      max_results: int = web.MAX_RESULTS) -> dict[str, Any]:
     # Registered only when `INTERNET_SEARCH` is on, so reaching this function at all
@@ -220,9 +330,12 @@ CORPUS_TOOLS = {
 
 WEB_TOOLS = {"search_web": search_web}
 
-WRAPPERS = CORPUS_TOOLS | WEB_TOOLS
+IMAGE_TOOLS = {"show_constellation_image": show_constellation_image}
 
-SCHEMAS = {schema["name"]: schema for schema in [*tools.SCHEMAS, web.SCHEMA]}
+WRAPPERS = CORPUS_TOOLS | WEB_TOOLS | IMAGE_TOOLS
+
+SCHEMAS = {schema["name"]: schema
+           for schema in [*tools.SCHEMAS, web.SCHEMA, tools.IMAGE_SCHEMA]}
 
 
 def _docstring(schema: dict[str, Any]) -> str:
@@ -246,15 +359,23 @@ def _docstring(schema: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def toolset(internet: bool | None = None) -> list[Tool[Deps]]:
+def toolset(internet: bool | None = None, images: bool = False) -> list[Tool[Deps]]:
     """The tools as PydanticAI sees them, described by their schemas.
 
-    The six corpus tools always; `search_web` only when `INTERNET_SEARCH` says so. It is
+    The six corpus tools always; `search_web` only when `INTERNET_SEARCH` says so, and
+    `show_constellation_image` only when the caller says it can display one. Both are
     left out entirely rather than registered and refused -- a tool the model cannot see
     is one it cannot misuse, and a refusal in a tool result reads as an invitation to
     rephrase and try again.
+
+    `images` is an argument and not an environment setting, unlike `internet`. Whether
+    the web may be reached is a property of the deployment; whether a picture can be
+    shown is a property of the caller, and a terminal cannot show one however the
+    environment is configured.
     """
-    wanted = CORPUS_TOOLS | (WEB_TOOLS if web.enabled(internet) else {})
+    wanted = (CORPUS_TOOLS
+              | (WEB_TOOLS if web.enabled(internet) else {})
+              | (IMAGE_TOOLS if images else {}))
     built = []
     for name, function in wanted.items():
         schema = SCHEMAS[name]
@@ -287,7 +408,7 @@ def qualify(name: str, provider: str) -> str:
     return name
 
 
-def model(name: str = MODEL, *, provider: str | None = None) -> Model:
+def model(name: str | None = None, *, provider: str | None = None) -> Model:
     """Resolve a model, on OpenAI or on OpenRouter.
 
     The key comes from the environment and is passed through rather than checked here:
@@ -295,7 +416,7 @@ def model(name: str = MODEL, *, provider: str | None = None) -> Model:
     this layer could add.
     """
     resolved = provider_name(provider)
-    name = qualify(name, resolved)
+    name = qualify(model_name(name), resolved)
     if resolved == "openrouter":
         return OpenAIChatModel(name, provider=OpenRouterProvider(
             api_key=os.environ.get("OPENROUTER_API_KEY")))
@@ -303,8 +424,8 @@ def model(name: str = MODEL, *, provider: str | None = None) -> Model:
         api_key=os.environ.get("OPENAI_API_KEY")))
 
 
-def build(llm: Model | str | None = None,
-          internet: bool | None = None) -> Agent[Deps, str]:
+def build(llm: Model | str | None = None, internet: bool | None = None,
+          images: bool = False) -> Agent[Deps, str]:
     """The agent. Output is prose: what it says is graded by a judge, not by a schema."""
     online = web.enabled(internet)
     if online:
@@ -313,14 +434,19 @@ def build(llm: Model | str | None = None,
         # silently returns nothing for a whole run.
         web.api_key()
     instructions = [INSTRUCTIONS, _language]
+    # Each added only with its tool. An instruction describing a tool the model cannot
+    # see is worse than no instruction: it invites the model to explain what it would
+    # have done instead of doing what it can.
     if online:
         instructions.insert(1, INTERNET)
+    if images:
+        instructions.insert(1, IMAGES)
     return Agent(
         llm if llm is not None else model(),
         deps_type=Deps,
         output_type=str,
         instructions=instructions,
-        tools=toolset(internet),
+        tools=toolset(internet, images=images),
         name="skylore",
     )
 
@@ -373,30 +499,45 @@ def trajectory(messages: list[Any]) -> tuple[Call, ...]:
     return tuple(calls)
 
 
-def ask(question: str, *, lang: str = "en", llm: Model | str | None = None,
-        embedder: retrieval.Embedder | None = None,
-        internet: bool | None = None,
-        connection: sqlite3.Connection | None = None) -> Answer:
+async def ask_async(question: str, *, lang: str | None = None,
+                    llm: Model | str | None = None,
+                    embedder: retrieval.Embedder | None = None,
+                    internet: bool | None = None,
+                    connection: sqlite3.Connection | None = None,
+                    images: bool = False,
+                    usage_limits: UsageLimits | None = None) -> Answer:
     """Answer one question, and report how it was answered.
 
     The trajectory and the usage come back beside the text because the agent is going to
     be evaluated on all three: the gold set already separates `question` from `probe`,
     so an agent run can be scored on whether it reached the right material from a
     human-shaped question rather than a hand-written tool call.
+
+    **This is the async form because the evaluation runs many questions at once.** The
+    note above the wrappers says concurrency belongs one level up, and it does -- but as
+    coroutines on one loop, not as threads: a sqlite connection belongs to the thread
+    that opened it, and a connection opened inside this coroutine stays on that thread
+    for the whole run. Each caller gets its own by leaving `connection` unset.
+
+    `usage_limits` is what makes a sweep affordable to run at all. `cost_limit` bounds
+    one question, so a model that decides to read every article cannot spend the budget
+    meant for sixty-eight of them -- the ceiling is enforced by the client, not hoped for.
     """
     owned = connection is None
     connection = connection or tools.connect()
     try:
-        agent = build(llm, internet=internet)
-        result = agent.run_sync(
-            question, deps=Deps(connection, lang=lang, embedder=embedder))
+        agent = build(llm, internet=internet, images=images)
+        result = await agent.run(
+            question, deps=Deps(connection, lang=language(lang), embedder=embedder),
+            usage_limits=usage_limits)
         usage = result.usage
-        # `cost` is computed from a price table that will not know every model on every
-        # provider. A missing price is not a failed run, so it reports as None.
-        try:
-            cost = float(usage.cost.total_price) if usage.cost else None
-        except Exception:
-            cost = None
+        # `RunUsage.cost` is a `Decimal` of dollars, already priced by genai-prices, and
+        # `None` when the price table does not know the model on that provider -- which
+        # is not a failed run, so it reports as None rather than as zero. It was read as
+        # `usage.cost.total_price` here until the evaluation needed the number and found
+        # every run reporting "unpriced": the attribute error was swallowed by a `try`,
+        # so the bug was invisible for exactly as long as nobody used the field.
+        cost = float(usage.cost) if usage.cost is not None else None
         return Answer(
             question=question,
             text=result.output,
@@ -410,6 +551,17 @@ def ask(question: str, *, lang: str = "en", llm: Model | str | None = None,
             connection.close()
 
 
+def ask(question: str, *, lang: str | None = None, llm: Model | str | None = None,
+        embedder: retrieval.Embedder | None = None,
+        internet: bool | None = None,
+        connection: sqlite3.Connection | None = None, images: bool = False,
+        usage_limits: UsageLimits | None = None) -> Answer:
+    """`ask_async` for one question from synchronous code, which is what the CLI is."""
+    return asyncio.run(ask_async(question, lang=lang, llm=llm, embedder=embedder,
+                                 internet=internet, connection=connection,
+                                 images=images, usage_limits=usage_limits))
+
+
 # ────────────────────────────────────── cli ──────────────────────────────────────
 
 def main(argv: list[str] | None = None) -> int:
@@ -419,17 +571,21 @@ def main(argv: list[str] | None = None) -> int:
         python -m skylore.agent "кто дал имена звёздам Ориона?" --lang ru --trace
         python -m skylore.agent "is this transliteration right?" --internet
 
+    Reads `.env` at the project root, and lets anything already exported win over it.
     Needs OPENAI_API_KEY, or OPENROUTER_API_KEY with SKYLORE_PROVIDER=openrouter.
-    Web search is off unless INTERNET_SEARCH=true or --internet, and needs
-    TAVILY_API_KEY.
+    SKYLORE_MODEL and SKYLORE_LANG set the defaults the flags below override. Web
+    search is off unless INTERNET_SEARCH=true or --internet, and needs TAVILY_API_KEY.
     """
     import argparse
+
+    load_env()
 
     parser = argparse.ArgumentParser(description=main.__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("question")
-    parser.add_argument("--lang", default="en", help="the user's language, e.g. ru")
-    parser.add_argument("--model", default=MODEL, help=f"default {MODEL}")
+    parser.add_argument("--lang", help=f"the user's language, e.g. ru; "
+                                       f"SKYLORE_LANG, else {LANG}")
+    parser.add_argument("--model", help=f"SKYLORE_MODEL, else {MODEL}")
     parser.add_argument("--provider", choices=PROVIDERS,
                         help="overrides SKYLORE_PROVIDER")
     parser.add_argument("--embed", metavar="MODEL",

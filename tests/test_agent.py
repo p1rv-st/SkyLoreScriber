@@ -111,7 +111,11 @@ class WhatTheModelSees(unittest.TestCase):
         try:
             with unittest.mock.patch.dict(os.environ,
                                           {"TAVILY_API_KEY": "tvly-test"}):
-                agent.build(FunctionModel(stub), internet=True).run_sync(
+                # Every optional tool on, because this class sweeps *every* schema the
+                # model can be shown -- a tool left off here is a description nobody
+                # checks arrived.
+                agent.build(FunctionModel(stub), internet=True,
+                            images=True).run_sync(
                     "test", deps=agent.Deps(connection, lang=lang))
         finally:
             connection.close()
@@ -212,6 +216,54 @@ class AttributionSurvivesTheWrapper(unittest.TestCase):
         self.assertTrue(payloads[0]["sources"])
         for terms in payloads[0]["sources"].values():
             self.assertTrue(terms["attribution"])
+
+
+@unittest.skipIf(FunctionModel is None, "pydantic-ai not installed (uv sync --extra agent)")
+@unittest.skipUnless(DATABASE.exists(), "corpus.db not built")
+class PictureLimit(unittest.TestCase):
+    """A model that wants a gallery gets two pictures and a reason.
+
+    The schema asks for restraint, and asking was measured: on "show me what they look
+    like" about five figures, the model called the tool six times. So the wrapper counts.
+    """
+
+    def run_greedy(self, wanted: int):
+        from pydantic_ai.messages import ToolCallPart
+        from skylore.agent import loop as agent
+
+        def greedy(messages, info: AgentInfo):
+            returned = [part for message in messages
+                        for part in getattr(message, "parts", ())
+                        if isinstance(part, ToolReturnPart)]
+            if len(returned) < wanted:
+                return ModelResponse(parts=[ToolCallPart(
+                    "show_constellation_image", {"constellation": "CON aztec 001"})])
+            return ModelResponse(parts=[TextPart("done")])
+
+        connection = tools.connect(DATABASE)
+        try:
+            result = agent.build(FunctionModel(greedy), images=True).run_sync(
+                "show me everything", deps=agent.Deps(connection))
+        finally:
+            connection.close()
+        return [part.content for message in result.all_messages()
+                for part in getattr(message, "parts", ())
+                if isinstance(part, ToolReturnPart)]
+
+    def test_the_first_two_are_shown_and_the_rest_refused(self):
+        from skylore.agent import loop as agent
+
+        payloads = self.run_greedy(5)
+        shown = [p for p in payloads if p.get("image")]
+        refused = [p for p in payloads if "refused" in p]
+        self.assertEqual(len(shown), agent.IMAGE_LIMIT)
+        self.assertTrue(refused)
+        self.assertIn("limit", refused[0]["refused"]["reason"])
+
+    def test_the_refusal_says_what_to_do_instead(self):
+        """A refusal with no alternative reads as an invitation to try again."""
+        refused = next(p for p in self.run_greedy(4) if "refused" in p)
+        self.assertIn("words", refused["refused"]["hint"])
 
 
 @unittest.skipIf(FunctionModel is None, "pydantic-ai not installed (uv sync --extra agent)")

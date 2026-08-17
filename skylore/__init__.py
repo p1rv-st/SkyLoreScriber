@@ -23,8 +23,16 @@ order means never needing a module that has not been introduced yet.
                         `python -m skylore.tools`
 
     agent/              the RAG loop over those six, plus `web` -- a seventh tool, off
-                        unless asked for, and the only one that leaves the corpus.
+                        unless asked for, and the only one that leaves the corpus, and
+                        `checks`, which reads a finished trajectory without a model.
                         `python -m skylore.agent`
+
+    monitor/            what happened when someone asked: runs, trajectories and
+                        verdicts in Postgres, a Streamlit chat over the agent and
+                        Grafana over the tables. The only layer that writes anywhere
+                        but the corpus, and the only one nothing else imports -- it
+                        depends on `agent`, and `agent` must never depend on it.
+                        `python -m skylore.monitor` / `docker compose up`
 
 One arrow runs against the grain: `query/cultures.py` and `query/retrieval.py` import
 `ingest.corpus` for `cited_refs` and `localise_section`. Those two are text handling, not
